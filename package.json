@@ -10,14 +10,23 @@
     "lint": "eslint --fix src/**/*.{tsx,ts,jsx,js} --no-error-on-unmatched-pattern && stylelint --fix src/{,*/}*.{scss,css} --allow-empty-input"
   },
   "dependencies": {
+    "@apollo/client": "^3.8.8",
+    "graphql": "^16.8.1",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/client-preset": "^4.1.0",
+    "@graphql-codegen/near-operation-file-preset": "^3.0.0",
+    "@graphql-codegen/typescript": "^4.0.1",
+    "@graphql-codegen/typescript-operations": "^4.0.1",
+    "@graphql-codegen/typescript-react-apollo": "^4.1.0",
     "@it-incubator/eslint-config": "^1.0.2",
     "@it-incubator/prettier-config": "^0.1.2",
     "@it-incubator/stylelint-config": "^1.0.3",
+    "@parcel/watcher": "^2.3.0",
     "@types/node": "^20.10.6",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -25,6 +34,6 @@
     "eslint-config-next": "14.0.4",
     "sass": "^1.69.7",
     "stylelint": "^16.1.0",
-    "typescript": "^5"
+    "typescript": "^5.3.3"
   }
 }
