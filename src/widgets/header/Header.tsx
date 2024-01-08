@@ -1,6 +1,6 @@
 import { LangSwitcher } from '@/features/lang-switcher'
 import { PATH } from '@/shared/config/routes'
-import { useTranslation } from '@/shared/hooks/useTranstaion'
+import { useTranslation } from '@/shared/hooks/useTranslation'
 import { Typography } from '@belozerov-egor/ui-libs'
 import Link from 'next/link'
 

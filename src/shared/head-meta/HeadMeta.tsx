@@ -1,4 +1,4 @@
-import { useTranslation } from '@/shared/hooks/useTranstaion'
+import { useTranslation } from '@/shared/hooks/useTranslation'
 import Head from 'next/head'
 
 type Props = {
