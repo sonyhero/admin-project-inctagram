@@ -1,4 +1,4 @@
-import { SignIn } from '@/pages/page-flat/auth/sign-in'
+import { SignIn } from '@/pages-flat/auth/sign-in'
 import { getAuthLayout } from '@/shared/providers'
 
 const SignInPage = () => {

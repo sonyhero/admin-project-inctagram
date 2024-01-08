@@ -11,7 +11,7 @@ export const AuthLayout: NextPage<PropsWithChildren> = ({ children }) => {
     <>
       <HeadMeta title={'Inctagram'} />
       <Header />
-      <main className={s.container}>{children}</main>
+      <main>{children}</main>
     </>
   )
 }
