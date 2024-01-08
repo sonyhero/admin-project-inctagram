@@ -9,8 +9,8 @@ dependencies:
     specifier: ^3.8.8
     version: 3.8.8(graphql@16.8.1)(react-dom@18.2.0)(react@18.2.0)
   '@belozerov-egor/ui-libs':
-    specifier: ^0.0.8
-    version: 0.0.8(@types/react-dom@18.2.18)(@types/react@18.2.47)
+    specifier: ^0.0.9
+    version: 0.0.9(@types/react-dom@18.2.18)(@types/react@18.2.47)
   '@fontsource/inter':
     specifier: ^5.0.8
     version: 5.0.16
@@ -20,6 +20,9 @@ dependencies:
   next:
     specifier: 14.0.4
     version: 14.0.4(@babel/core@7.23.7)(react-dom@18.2.0)(react@18.2.0)(sass@1.69.7)
+  nprogress:
+    specifier: ^0.2.0
+    version: 0.2.0
   react:
     specifier: ^18
     version: 18.2.0
@@ -64,6 +67,9 @@ devDependencies:
   '@types/node':
     specifier: ^20.10.6
     version: 20.10.6
+  '@types/nprogress':
+    specifier: ^0.2.3
+    version: 0.2.3
   '@types/react':
     specifier: ^18
     version: 18.2.47
@@ -708,8 +714,8 @@ packages:
       '@babel/helper-validator-identifier': 7.22.20
       to-fast-properties: 2.0.0
 
-  /@belozerov-egor/ui-libs@0.0.8(@types/react-dom@18.2.18)(@types/react@18.2.47):
-    resolution: {integrity: sha512-q1R6dx0oV60WzjdISNcms9KEW5OIQA/QMEE3PPcEbZAxCSvdx3IsClOTo1N72H9R+tzWnQDAaZLshr5OjoufNA==}
+  /@belozerov-egor/ui-libs@0.0.9(@types/react-dom@18.2.18)(@types/react@18.2.47):
+    resolution: {integrity: sha512-U0B5oDxPpan/gxTq5V6dCR7QEpVsnqE2PWSdtGcyaAMp46TJOEyAXOIRE9YYKmY+gZ8/QiZXo80BD+bH38wSYg==}
     dependencies:
       '@fontsource/inter': 5.0.16
       '@radix-ui/react-checkbox': 1.0.4(@types/react-dom@18.2.18)(@types/react@18.2.47)(react-dom@18.2.0)(react@18.2.0)
@@ -2813,6 +2819,10 @@ packages:
     resolution: {integrity: sha512-Vac8H+NlRNNlAmDfGUP7b5h/KA+AtWIzuXy0E6OyP8f1tCLYAtPvKRRDJjAPqhpCb0t6U2j7/xqAuLEebW2kiw==}
     dependencies:
       undici-types: 5.26.5
+    dev: true
+
+  /@types/nprogress@0.2.3:
+    resolution: {integrity: sha512-k7kRA033QNtC+gLc4VPlfnue58CM1iQLgn1IMAU8VPHGOj7oIHPp9UlhedEnD/Gl8evoCjwkZjlBORtZ3JByUA==}
     dev: true
 
   /@types/prop-types@15.7.11:
@@ -5595,6 +5605,10 @@ packages:
   /normalize-path@3.0.0:
     resolution: {integrity: sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==}
     engines: {node: '>=0.10.0'}
+
+  /nprogress@0.2.0:
+    resolution: {integrity: sha512-I19aIingLgR1fmhftnbWWO3dXc0hSxqHQHQb3H8m+K3TnEn/iSeTZZOyvKXWqQESMwuUVnatlCnZdLBZZt2VSA==}
+    dev: false
 
   /nullthrows@1.1.1:
     resolution: {integrity: sha512-2vPPEi+Z7WqML2jZYddDIfy5Dqb0r2fze2zTxNNknZaFpVHU3mFB3R+DWeJWGVx0ecvttSGlJTI+WG+8Z4cDWw==}
