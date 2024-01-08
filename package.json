@@ -12,11 +12,12 @@
     "codegen:watch": "graphql-codegen --watch"
   },
   "dependencies": {
-    "@fontsource/inter": "^5.0.8",
     "@apollo/client": "^3.8.8",
-    "@belozerov-egor/ui-libs": "^0.0.8",
+    "@belozerov-egor/ui-libs": "^0.0.9",
+    "@fontsource/inter": "^5.0.8",
     "graphql": "^16.8.1",
     "next": "14.0.4",
+    "nprogress": "^0.2.0",
     "react": "^18",
     "react-dom": "^18",
     "react-i18next": "^14.0.0"
@@ -33,6 +34,7 @@
     "@it-incubator/stylelint-config": "^1.0.3",
     "@parcel/watcher": "^2.3.0",
     "@types/node": "^20.10.6",
+    "@types/nprogress": "^0.2.3",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
