@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "graphql-codegen && eslint --fix && next dev",
-    "build": "next build",
+    "dev": "graphql-codegen && next dev",
+    "build": "eslint --fix src/**/*.{tsx,ts,jsx,js} --no-error-on-unmatched-pattern && stylelint --fix src/{,*/}*.{scss,css} --allow-empty-input && next build",
     "start": "next start",
     "format": "prettier --write src",
     "lint": "eslint --fix src/**/*.{tsx,ts,jsx,js} --no-error-on-unmatched-pattern && stylelint --fix src/{,*/}*.{scss,css} --allow-empty-input",
-    "codegen:generate": "graphql-codegen ",
+    "codegen:generate": "graphql-codegen",
     "codegen:watch": "graphql-codegen --watch"
   },
   "dependencies": {
@@ -19,8 +19,7 @@
     "next": "14.0.4",
     "nprogress": "^0.2.0",
     "react": "^18",
-    "react-dom": "^18",
-    "react-i18next": "^14.0.0"
+    "react-dom": "^18"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.0",
