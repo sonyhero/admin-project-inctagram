@@ -35,7 +35,7 @@ export const LinkSideBar = (props: Props) => {
     <div className={styles.container} onClick={handleItemClick}>
       <Link className={s.link} href={`${link}`} tabIndex={1}>
         {children}
-        <Typography className={styles.check} color={'primary'} variant={'regular14'}>
+        <Typography className={styles.check} color={'primary'} variant={'bold14'}>
           {nameLink}
         </Typography>
       </Link>

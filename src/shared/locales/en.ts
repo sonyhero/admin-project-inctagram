@@ -25,4 +25,10 @@ export const en = {
     statistics: 'Statistics',
     useList: 'User list',
   },
+  usersList: {
+    dateAdded: 'Date added',
+    profileLink: 'Profile link',
+    userId: 'User ID',
+    userName: 'Username',
+  },
 }
