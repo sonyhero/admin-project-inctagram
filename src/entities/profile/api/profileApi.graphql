@@ -1,0 +1,15 @@
+query getProfile($userID: Int!) {
+    getProfileInfo(userId: $userID) {
+        profile {
+            createdAt
+            id
+            lastName
+            userName
+            avatars {
+                url
+                height
+                width
+            }
+        }
+    }
+}
