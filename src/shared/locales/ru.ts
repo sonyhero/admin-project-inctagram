@@ -19,4 +19,10 @@ export const ru: LocaleType = {
     super: 'Супер',
   },
   metaDescription: 'Админ панель для приложения Инктаграм',
+  sidebar: {
+    paymentsList: 'Payments list',
+    postList: 'Post list',
+    statistics: 'Statistics',
+    useList: 'User list',
+  },
 }

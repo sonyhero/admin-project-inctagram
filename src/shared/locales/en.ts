@@ -19,4 +19,10 @@ export const en = {
     super: 'Super',
   },
   metaDescription: 'Admin panel for app Inсtagram ',
+  sidebar: {
+    paymentsList: 'Payments list',
+    postList: 'Post list',
+    statistics: 'Statistics',
+    useList: 'User list',
+  },
 }

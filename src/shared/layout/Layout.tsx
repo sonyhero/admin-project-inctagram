@@ -1,18 +1,23 @@
 import { PropsWithChildren, ReactElement } from 'react'
 
 import { HeadMeta, useIsLoggedIn } from '@/shared'
+import { SideBar } from '@/widgets'
 import { Header } from '@/widgets/header'
 import { NextPage } from 'next'
+
+import s from './Layout.module.scss'
 
 export const Layout: NextPage<PropsWithChildren> = ({ children }) => {
   const {} = useIsLoggedIn()
 
   return (
     <>
-      <HeadMeta title={'Inctagram'} />
+      <HeadMeta title={'InctagramAdmin'} />
       <Header />
-      <div>
-        <main>{children}</main>
+
+      <div className={s.container}>
+        <SideBar />
+        <main className={s.main}>{children}</main>
       </div>
     </>
   )
