@@ -1,1 +1,1 @@
-export * from './useSessionStorage'
+export { useSessionStorage } from './useSessionStorage'
