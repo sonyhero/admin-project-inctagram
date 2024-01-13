@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
 
-import { PATH, useisSessionStorage } from '@/shared'
+import { PATH, useSessionStorage } from '@/shared'
 import { useRouter } from 'next/router'
 
 export const useIsLoggedIn = () => {
   const router = useRouter()
-  const [getItem] = useisSessionStorage('isLoggedIn')
+  const [getItem] = useSessionStorage('isLoggedIn')
   const isLoggedIn = getItem()
   const currentPath = router.pathname
 
