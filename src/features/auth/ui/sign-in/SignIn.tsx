@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { useLoginMutation } from '@/features/auth/authApi.generated'
-import { PATH, useTranslation } from '@/shared'
+import { PATH, useSessionStorage, useTranslation } from '@/shared'
 import { Button, Card, TextField, Typography } from '@belozerov-egor/ui-libs'
 import { useRouter } from 'next/router'
 import NProgress from 'nprogress'
@@ -10,6 +10,7 @@ import s from './SignIn.module.scss'
 
 export const SignIn = () => {
   const { t } = useTranslation()
+  const [, setToken] = useSessionStorage('isLoggedIn')
   const router = useRouter()
   const [signInForm, setSignInForm] = useState({ email: '', password: '' })
   const [errorMessage, setErrorMessage] = useState('')
@@ -25,19 +26,24 @@ export const SignIn = () => {
     if (signInForm.email === 'admin@gmail.com' && signInForm.password === 'admin') {
       NProgress.start()
       try {
-        await loginMutation({
+        const response = await loginMutation({
           variables: {
             email: signInForm.email,
             password: signInForm.password,
           },
         })
-        NProgress.done()
-        router.push(PATH.HOME)
+
+        if (response.data?.loginAdmin.logged) {
+          setToken(response.data?.loginAdmin.logged)
+          NProgress.done()
+        }
+        router.push(PATH.USERS)
       } catch (error) {
         console.log(error)
+        NProgress.done()
       }
     } else {
-      setErrorMessage(t.auth.signIn.signInServerError) // => )
+      setErrorMessage(t.auth.signIn.signInServerError)
     }
   }
 

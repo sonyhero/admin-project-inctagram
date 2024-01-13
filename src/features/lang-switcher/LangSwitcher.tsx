@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { useTranslation } from '@/shared/hooks/useTranslation'
+import { useTranslation } from '@/shared'
 import ru from '@/shared/ui/icons/ru-flag/ru.png'
 import en from '@/shared/ui/icons/uk-flag/en.png'
 import { SelectBox } from '@belozerov-egor/ui-libs'
