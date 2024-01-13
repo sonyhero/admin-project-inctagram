@@ -1,7 +1,7 @@
-import { getBaseLayout } from '@/shared'
+import { getBaseLayout, useAuth } from '@/shared'
 
 const HomePage = () => {
-  return <div>main page</div>
+  const {} = useAuth()
 }
 
 export default HomePage
