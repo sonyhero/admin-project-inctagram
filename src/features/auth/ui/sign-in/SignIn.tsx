@@ -10,7 +10,8 @@ import s from './SignIn.module.scss'
 
 export const SignIn = () => {
   const { t } = useTranslation()
-  const [, setToken] = useSessionStorage('isLoggedIn')
+  const [, setAuthToken] = useSessionStorage<string>('authToken')
+  const [, setIsLoggedIn] = useSessionStorage<boolean>('isLoggedIn')
   const router = useRouter()
   const [signInForm, setSignInForm] = useState({ email: '', password: '' })
   const [errorMessage, setErrorMessage] = useState('')
@@ -34,10 +35,13 @@ export const SignIn = () => {
         })
 
         if (response.data?.loginAdmin.logged) {
-          setToken(response.data?.loginAdmin.logged)
+          const base64 = btoa(`${signInForm.email}:${signInForm.password}`)
+
+          setAuthToken(base64)
+          setIsLoggedIn(response.data?.loginAdmin.logged)
+          await router.push(PATH.USERS)
           NProgress.done()
         }
-        router.push(PATH.USERS)
       } catch (error) {
         console.log(error)
         NProgress.done()
