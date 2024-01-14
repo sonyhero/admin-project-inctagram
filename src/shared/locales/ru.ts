@@ -20,9 +20,15 @@ export const ru: LocaleType = {
   },
   metaDescription: 'Админ панель для приложения Инктаграм',
   sidebar: {
-    paymentsList: 'Payments list',
-    postList: 'Post list',
-    statistics: 'Statistics',
-    useList: 'User list',
+    paymentsList: 'Список платежей',
+    postList: 'Список постов',
+    statistics: 'Статистика',
+    useList: 'Список пользователей',
+  },
+  usersList: {
+    dateAdded: 'Дата добавления',
+    profileLink: 'Ссылка на профиль',
+    userId: 'ID пользователя',
+    userName: 'Имя пользователя',
   },
 }

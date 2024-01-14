@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { PaymentsIcon, PostIcon, StatisticsIcon, UserIcon, useTranslation } from '@/shared'
 import { PATH } from '@/shared/config/routes'
 import { Nullable } from '@/shared/types'
 import { VariantIconType } from '@/widgets/side-bar/SideBarTypes'
 import { LinkSideBar } from '@/widgets/side-bar/link-side-bar/LinkSideBar'
+import { useRouter } from 'next/router'
 
 import s from './SideBar.module.scss'
 
@@ -14,6 +15,11 @@ const LINK_COLOR = '#fff'
 export const SideBar = () => {
   const [variantIcon, setVariantIcon] = useState<Nullable<VariantIconType>>()
   const { t } = useTranslation()
+  const { asPath } = useRouter()
+
+  useEffect(() => {
+    setVariantIcon(asPath)
+  }, [asPath])
 
   const handleItemClick = (variant: Nullable<VariantIconType>) => {
     setVariantIcon(variant)
