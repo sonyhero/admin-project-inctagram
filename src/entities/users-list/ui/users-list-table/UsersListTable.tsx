@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { SettingsTable } from '@/entities/users-list'
+import { GetUsersListQuery } from '@/entities/users-list/api/usersListApi.generated'
 import { BanIcon, DeleteUserIcon, FilterIcon, MoreHorizontal, useTranslation } from '@/shared'
 import {
   Body,
@@ -16,8 +17,12 @@ import {
 import { useRouter } from 'next/router'
 
 import s from './UsersListTable.module.scss'
-
-export const UsersListTable = () => {
+type PropsType = {
+  data: GetUsersListQuery | undefined
+}
+export const UsersListTable = ({ data }: PropsType) => {
+  const users = data?.getUsers.users
+  const pagination = data?.getUsers.pagination
   const { locale } = useRouter()
   const { t } = useTranslation()
   const headOptions = [
@@ -26,10 +31,6 @@ export const UsersListTable = () => {
     t.usersList.profileLink,
     t.usersList.dateAdded,
     '',
-  ]
-  const data = [
-    { dateAdded: 'test', id: 1, profileLink: 'test', userId: '21331QErQe21', userName: 'test' },
-    { dateAdded: 'test', id: 2, profileLink: 'test', userId: '21331QErQe21', userName: 'test' },
   ]
   const headTable = headOptions.map((option, index) => (
     <HeadCell key={index}>
@@ -78,20 +79,24 @@ export const UsersListTable = () => {
       id: 3,
     },
   ]
-  const tableData = data.map((item, index) => {
+  const tableData = users?.map(user => {
     return (
-      <Row key={index}>
+      <Row key={user.id}>
         <Cell>
-          <Typography variant={'bold14'}>{item.userId}</Typography>
+          {user.userBan && <BanIcon />}
+          <Typography variant={'bold14'}>{user.id}</Typography>
         </Cell>
         <Cell>
-          <Typography variant={'bold14'}>{item.userName}</Typography>
+          <Typography variant={'bold14'}>{user.userName}</Typography>
         </Cell>
         <Cell>
-          <Typography variant={'bold14'}>${item.profileLink}</Typography>
+          {/*тут нечего вставить кроме этого*/}
+          <Typography variant={'bold14'}>${user.userName}</Typography>
         </Cell>
         <Cell>
-          <Typography variant={'bold14'}>{item.dateAdded}</Typography>
+          <Typography variant={'bold14'}>
+            {new Date(user.createdAt).toLocaleDateString('ru-RU')}
+          </Typography>
         </Cell>
         <Cell>
           <DropDownMenu
@@ -114,7 +119,7 @@ export const UsersListTable = () => {
         </Head>
         <Body>{tableData}</Body>
       </Root>
-      <Pagination count={1} onChange={() => {}} page={10} />
+      <Pagination count={pagination?.pagesCount ?? 1} onChange={() => {}} page={1} />
     </div>
   )
 }

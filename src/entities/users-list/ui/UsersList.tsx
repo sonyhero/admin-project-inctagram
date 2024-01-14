@@ -53,5 +53,5 @@ export const UsersList = () => {
     setSearchTerm(debouncedValue)
   }, [debouncedValue])
 
-  return <UsersListTable />
+  return <UsersListTable data={data} />
 }
