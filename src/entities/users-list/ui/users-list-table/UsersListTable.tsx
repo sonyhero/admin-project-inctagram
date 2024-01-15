@@ -12,19 +12,33 @@ import {
   Pagination,
   Root,
   Row,
+  SelectBox,
   Typography,
 } from '@belozerov-egor/ui-libs'
-import { useRouter } from 'next/router'
 
 import s from './UsersListTable.module.scss'
-type PropsType = {
+
+type Props = {
   data: GetUsersListQuery | undefined
+  pageNumber: number
+  setPageNumber: (value: number) => void
+  setPageSize: (value: number) => void
 }
-export const UsersListTable = ({ data }: PropsType) => {
+
+const paginationOptions = [
+  { value: 5 },
+  { value: 10 },
+  { value: 20 },
+  { value: 50 },
+  { value: 100 },
+]
+
+export const UsersListTable = (props: Props) => {
+  const { data, pageNumber, setPageNumber, setPageSize } = props
   const users = data?.getUsers.users
   const pagination = data?.getUsers.pagination
-  const { locale } = useRouter()
   const { t } = useTranslation()
+
   const headOptions = [
     t.usersList.userId,
     t.usersList.userName,
@@ -32,6 +46,7 @@ export const UsersListTable = ({ data }: PropsType) => {
     t.usersList.dateAdded,
     '',
   ]
+
   const headTable = headOptions.map((option, index) => (
     <HeadCell key={index}>
       <div className={s.headItem}>
@@ -119,7 +134,21 @@ export const UsersListTable = ({ data }: PropsType) => {
         </Head>
         <Body>{tableData}</Body>
       </Root>
-      <Pagination count={pagination?.pagesCount ?? 1} onChange={() => {}} page={1} />
+      <div className={s.pagination}>
+        <Pagination
+          count={pagination?.pagesCount ?? 1}
+          onChange={setPageNumber}
+          page={pageNumber}
+        />
+        <Typography variant={'regular14'}>{t.usersList.paginationSelect.show}</Typography>
+        <SelectBox
+          className={s.selectPagination}
+          defaultValue={paginationOptions[0].value}
+          onValueChange={setPageSize}
+          options={paginationOptions}
+        />
+        <Typography variant={'regular14'}>{t.usersList.paginationSelect.onPage}</Typography>
+      </div>
     </div>
   )
 }

@@ -27,6 +27,10 @@ export const en = {
   },
   usersList: {
     dateAdded: 'Date added',
+    paginationSelect: {
+      onPage: 'On page',
+      show: 'Show',
+    },
     profileLink: 'Profile link',
     userId: 'User ID',
     userName: 'Username',

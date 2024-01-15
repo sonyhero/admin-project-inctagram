@@ -6,9 +6,9 @@ import { useDebounce } from '@/shared'
 import { BlockStatus, SortDirection } from '@/shared/api/generated/types.generated'
 
 export const UsersList = () => {
-  const [pageNumber, setPageNumber] = useState(1)
-  const [pageSize, setPageSize] = useState(10)
-  const [searchTerm, setSearchTerm] = useState('')
+  const [pageNumber, setPageNumber] = useState<number>(1)
+  const [pageSize, setPageSize] = useState<number>(10)
+  const [searchTerm, setSearchTerm] = useState<string>('')
   const [search, setSearch] = useState('')
   const [sort, setSort] = useState<{ direction: SortDirection; key: string }>({
     direction: SortDirection.Asc,
@@ -53,5 +53,16 @@ export const UsersList = () => {
     setSearchTerm(debouncedValue)
   }, [debouncedValue])
 
-  return <UsersListTable data={data} />
+  if (loading) {
+    return <span>...loading</span>
+  }
+
+  return (
+    <UsersListTable
+      data={data}
+      pageNumber={pageNumber}
+      setPageNumber={setPageNumber}
+      setPageSize={setPageSize}
+    />
+  )
 }

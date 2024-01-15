@@ -27,6 +27,10 @@ export const ru: LocaleType = {
   },
   usersList: {
     dateAdded: 'Дата добавления',
+    paginationSelect: {
+      onPage: 'На Странице',
+      show: 'Показать',
+    },
     profileLink: 'Ссылка на профиль',
     userId: 'ID пользователя',
     userName: 'Имя пользователя',
