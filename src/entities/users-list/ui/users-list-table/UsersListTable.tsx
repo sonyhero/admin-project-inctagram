@@ -21,20 +21,15 @@ import s from './UsersListTable.module.scss'
 type Props = {
   data: GetUsersListQuery | undefined
   pageNumber: number
+  pageSize: number
   setPageNumber: (value: number) => void
   setPageSize: (value: number) => void
 }
 
-const paginationOptions = [
-  { value: 5 },
-  { value: 10 },
-  { value: 20 },
-  { value: 50 },
-  { value: 100 },
-]
+const paginationOptions = [{ value: 5 }, { value: 10 }, { value: 20 }]
 
 export const UsersListTable = (props: Props) => {
-  const { data, pageNumber, setPageNumber, setPageSize } = props
+  const { data, pageNumber, pageSize, setPageNumber, setPageSize } = props
   const users = data?.getUsers.users
   const pagination = data?.getUsers.pagination
   const { t } = useTranslation()
@@ -143,7 +138,7 @@ export const UsersListTable = (props: Props) => {
         <Typography variant={'regular14'}>{t.usersList.paginationSelect.show}</Typography>
         <SelectBox
           className={s.selectPagination}
-          defaultValue={paginationOptions[0].value}
+          defaultValue={pageSize}
           onValueChange={setPageSize}
           options={paginationOptions}
         />

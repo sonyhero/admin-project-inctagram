@@ -7,7 +7,7 @@ import { BlockStatus, SortDirection } from '@/shared/api/generated/types.generat
 
 export const UsersList = () => {
   const [pageNumber, setPageNumber] = useState<number>(1)
-  const [pageSize, setPageSize] = useState<number>(10)
+  const [pageSize, setPageSize] = useState<number>(5)
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [search, setSearch] = useState('')
   const [sort, setSort] = useState<{ direction: SortDirection; key: string }>({
@@ -28,6 +28,7 @@ export const UsersList = () => {
       sortDirection: sort.direction,
     },
   })
+
   const debouncedValue = useDebounce<string>(search, 400)
 
   const handleSort = (value: any) => {
@@ -61,6 +62,7 @@ export const UsersList = () => {
     <UsersListTable
       data={data}
       pageNumber={pageNumber}
+      pageSize={pageSize}
       setPageNumber={setPageNumber}
       setPageSize={setPageSize}
     />
