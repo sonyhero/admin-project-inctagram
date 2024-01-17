@@ -11,6 +11,10 @@ export const en = {
       signInServerError: 'The email or password are incorrect. Try again please',
     },
   },
+  error404: {
+    backToMain: 'Back to main',
+    pageNotFound: 'Sorry! Page not found!',
+  },
   header: {
     admin: 'Admin',
     en: 'English',
