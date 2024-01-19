@@ -2,7 +2,16 @@ import React from 'react'
 
 import { SettingsTable } from '@/entities/users-list'
 import { GetUsersListQuery } from '@/entities/users-list/api/usersListApi.generated'
-import { BanIcon, DeleteUserIcon, FilterIcon, MoreHorizontal, useTranslation } from '@/shared'
+import {
+  BanIcon,
+  DeleteUserIcon,
+  FilterIcon,
+  MoreHorizontal,
+  Nullable,
+  PRODUCTION_PATH,
+  useTranslation,
+} from '@/shared'
+import { BlockStatus } from '@/shared/api/generated/types.generated'
 import {
   Body,
   Cell,
@@ -15,6 +24,7 @@ import {
   SelectBox,
   Typography,
 } from '@belozerov-egor/ui-libs'
+import Link from 'next/link'
 
 import s from './UsersListTable.module.scss'
 
@@ -94,15 +104,18 @@ export const UsersListTable = (props: Props) => {
     return (
       <Row key={user.id}>
         <Cell>
-          {user.userBan && <BanIcon />}
-          <Typography variant={'bold14'}>{user.id}</Typography>
+          <Typography className={s.userId} variant={'bold14'}>
+            {user.userBan && <BanIcon />}
+            {user.id}
+          </Typography>
         </Cell>
         <Cell>
           <Typography variant={'bold14'}>{user.userName}</Typography>
         </Cell>
         <Cell>
-          {/*тут нечего вставить кроме этого*/}
-          <Typography variant={'bold14'}>${user.userName}</Typography>
+          <Link className={s.link} href={`${PRODUCTION_PATH.USER}/${user.id}`}>
+            <Typography variant={'bold14'}>{user.userName}</Typography>{' '}
+          </Link>
         </Cell>
         <Cell>
           <Typography variant={'bold14'}>
