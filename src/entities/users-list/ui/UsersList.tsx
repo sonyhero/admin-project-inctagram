@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { UsersListTable } from '@/entities/users-list'
 import { useGetUsersListQuery } from '@/entities/users-list/api/usersListApi.generated'
-import { useDebounce } from '@/shared'
+import { Nullable, useDebounce } from '@/shared'
 import { BlockStatus, SortDirection } from '@/shared/api/generated/types.generated'
 
 export const UsersList = () => {
@@ -14,9 +14,8 @@ export const UsersList = () => {
     direction: SortDirection.Asc,
     key: 'id',
   })
-  const [block, setBlock] = useState('active')
-
-  const blockStatus = block === 'active' ? undefined : BlockStatus.Blocked
+  const [blockStatus, setBlockStatus] =
+    useState<Nullable<BlockStatus.Blocked | undefined>>(undefined)
 
   const { data, loading } = useGetUsersListQuery({
     variables: {
@@ -63,6 +62,7 @@ export const UsersList = () => {
       data={data}
       pageNumber={pageNumber}
       pageSize={pageSize}
+      setBlockStatus={setBlockStatus}
       setPageNumber={setPageNumber}
       setPageSize={setPageSize}
     />

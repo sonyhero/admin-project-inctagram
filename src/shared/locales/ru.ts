@@ -36,6 +36,12 @@ export const ru: LocaleType = {
       show: 'Показать',
     },
     profileLink: 'Ссылка на профиль',
+    search: 'Поиск',
+    settingsTableDescription: {
+      blocked: 'Заблокирован',
+      notBlocked: 'Не заблокирован',
+      notSelected: 'Не выбрано',
+    },
     userId: 'ID пользователя',
     userName: 'Имя пользователя',
   },

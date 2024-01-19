@@ -22,6 +22,7 @@ type Props = {
   data: GetUsersListQuery | undefined
   pageNumber: number
   pageSize: number
+  setBlockStatus: (value: Nullable<BlockStatus.Blocked>) => void
   setPageNumber: (value: number) => void
   setPageSize: (value: number) => void
 }
@@ -29,7 +30,7 @@ type Props = {
 const paginationOptions = [{ value: 5 }, { value: 10 }, { value: 20 }]
 
 export const UsersListTable = (props: Props) => {
-  const { data, pageNumber, pageSize, setPageNumber, setPageSize } = props
+  const { data, pageNumber, pageSize, setBlockStatus, setPageNumber, setPageSize } = props
   const users = data?.getUsers.users
   const pagination = data?.getUsers.pagination
   const { t } = useTranslation()
@@ -122,7 +123,7 @@ export const UsersListTable = (props: Props) => {
 
   return (
     <div className={s.usersList}>
-      <SettingsTable />
+      <SettingsTable setBlockStatus={setBlockStatus} />
       <Root className={s.table}>
         <Head>
           <Row>{headTable}</Row>

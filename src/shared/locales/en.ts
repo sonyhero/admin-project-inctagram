@@ -36,6 +36,12 @@ export const en = {
       show: 'Show',
     },
     profileLink: 'Profile link',
+    search: 'Search',
+    settingsTableDescription: {
+      blocked: 'Blocked',
+      notBlocked: 'Not bBocked',
+      notSelected: 'Not selected',
+    },
     userId: 'User ID',
     userName: 'Username',
   },
