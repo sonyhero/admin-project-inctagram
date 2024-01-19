@@ -30,16 +30,15 @@ export const UsersList = () => {
 
   const debouncedValue = useDebounce<string>(search, 400)
 
-  const handleSort = (value: any) => {
-    if (!value) {
-      setSort({
-        direction: SortDirection.Asc,
-        key: 'id',
-      })
-    } else {
-      setSort(value)
+  const handleSort = (key: string) => {
+    if (sort.key !== key) {
+      setSort({ direction: SortDirection.Asc, key })
     }
-    console.log('value', value)
+
+    setSort({
+      direction: sort?.direction === SortDirection.Asc ? SortDirection.Desc : SortDirection.Asc,
+      key,
+    })
   }
 
   const handleSearchTerm = (value: string) => {
@@ -65,6 +64,7 @@ export const UsersList = () => {
       setBlockStatus={setBlockStatus}
       setPageNumber={setPageNumber}
       setPageSize={setPageSize}
+      setSort={handleSort}
     />
   )
 }

@@ -35,36 +35,39 @@ type Props = {
   setBlockStatus: (value: Nullable<BlockStatus.Blocked>) => void
   setPageNumber: (value: number) => void
   setPageSize: (value: number) => void
+  setSort: (value: string) => void
 }
 
 const paginationOptions = [{ value: 5 }, { value: 10 }, { value: 20 }]
 
 export const UsersListTable = (props: Props) => {
-  const { data, pageNumber, pageSize, setBlockStatus, setPageNumber, setPageSize } = props
+  const { data, pageNumber, pageSize, setBlockStatus, setPageNumber, setPageSize, setSort } = props
   const users = data?.getUsers.users
   const pagination = data?.getUsers.pagination
   const { t } = useTranslation()
 
   const headOptions = [
-    t.usersList.userId,
-    t.usersList.userName,
-    t.usersList.profileLink,
-    t.usersList.dateAdded,
-    '',
+    { headText: t.usersList.userId, sortByKey: 'id' },
+    { headText: t.usersList.userName, sortByKey: 'userName' },
+    { headText: t.usersList.profileLink, sortByKey: '' },
+    { headText: t.usersList.dateAdded, sortByKey: 'createdAt' },
+    { headText: '', sortByKey: '' },
   ]
 
-  const headTable = headOptions.map((option, index) => (
-    <HeadCell key={index}>
-      <div className={s.headItem}>
-        <Typography className={s.headItemText} variant={'bold14'}>
-          {option}
-        </Typography>
-        {option !== '' && <FilterIcon />}
-      </div>
-      {/*<ArrowUp />*/}
-      {/*<ArrowDown />*/}
-    </HeadCell>
-  ))
+  const headTable = headOptions.map((option, index) => {
+    const onClickHandler = () => !!option.sortByKey && setSort(option.sortByKey)
+
+    return (
+      <HeadCell key={index}>
+        <div className={s.headItem} onClick={onClickHandler}>
+          <Typography className={s.headItemText} variant={'bold14'}>
+            {option.headText}
+          </Typography>
+          {!!option.sortByKey && <FilterIcon />}
+        </div>
+      </HeadCell>
+    )
+  })
   const dropDownMenuSize = [
     {
       component: (
