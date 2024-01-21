@@ -1,15 +1,17 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import { UsersListTable } from '@/entities/users-list'
+import { SettingsTable, UsersListTable } from '@/entities/users-list'
 import { useGetUsersListQuery } from '@/entities/users-list/api/usersListApi.generated'
 import { Nullable, useDebounce } from '@/shared'
 import { BlockStatus, SortDirection } from '@/shared/api/generated/types.generated'
+
+import s from './UsersList.module.scss'
 
 export const UsersList = () => {
   const [pageNumber, setPageNumber] = useState<number>(1)
   const [pageSize, setPageSize] = useState<number>(5)
   const [searchTerm, setSearchTerm] = useState<string>('')
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState<string>('')
   const [sort, setSort] = useState<{ direction: SortDirection; key: string }>({
     direction: SortDirection.Asc,
     key: 'id',
@@ -57,14 +59,17 @@ export const UsersList = () => {
   }
 
   return (
-    <UsersListTable
-      data={data}
-      pageNumber={pageNumber}
-      pageSize={pageSize}
-      setBlockStatus={setBlockStatus}
-      setPageNumber={setPageNumber}
-      setPageSize={setPageSize}
-      setSort={handleSort}
-    />
+    <div className={s.usersList}>
+      <SettingsTable setBlockStatus={setBlockStatus} />
+
+      <UsersListTable
+        data={data}
+        pageNumber={pageNumber}
+        pageSize={pageSize}
+        setPageNumber={setPageNumber}
+        setPageSize={setPageSize}
+        setSort={handleSort}
+      />
+    </div>
   )
 }

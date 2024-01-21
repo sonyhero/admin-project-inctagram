@@ -1,17 +1,14 @@
 import React from 'react'
 
-import { SettingsTable } from '@/entities/users-list'
 import { GetUsersListQuery } from '@/entities/users-list/api/usersListApi.generated'
 import {
   BanIcon,
   DeleteUserIcon,
   FilterIcon,
   MoreHorizontal,
-  Nullable,
   PRODUCTION_PATH,
   useTranslation,
 } from '@/shared'
-import { BlockStatus } from '@/shared/api/generated/types.generated'
 import {
   Body,
   Cell,
@@ -32,7 +29,6 @@ type Props = {
   data: GetUsersListQuery | undefined
   pageNumber: number
   pageSize: number
-  setBlockStatus: (value: Nullable<BlockStatus.Blocked>) => void
   setPageNumber: (value: number) => void
   setPageSize: (value: number) => void
   setSort: (value: string) => void
@@ -41,7 +37,7 @@ type Props = {
 const paginationOptions = [{ value: 5 }, { value: 10 }, { value: 20 }]
 
 export const UsersListTable = (props: Props) => {
-  const { data, pageNumber, pageSize, setBlockStatus, setPageNumber, setPageSize, setSort } = props
+  const { data, pageNumber, pageSize, setPageNumber, setPageSize, setSort } = props
   const users = data?.getUsers.users
   const pagination = data?.getUsers.pagination
   const { t } = useTranslation()
@@ -138,8 +134,7 @@ export const UsersListTable = (props: Props) => {
   })
 
   return (
-    <div className={s.usersList}>
-      <SettingsTable setBlockStatus={setBlockStatus} />
+    <>
       <Root className={s.table}>
         <Head>
           <Row>{headTable}</Row>
@@ -161,6 +156,6 @@ export const UsersListTable = (props: Props) => {
         />
         <Typography variant={'regular14'}>{t.usersList.paginationSelect.onPage}</Typography>
       </div>
-    </div>
+    </>
   )
 }
