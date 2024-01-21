@@ -43,9 +43,6 @@ export const UsersList = () => {
     })
   }
 
-  const handleSearchTerm = (value: string) => {
-    setSearch(value)
-  }
   const handleClearSearch = () => {
     setSearch('')
   }
@@ -60,7 +57,12 @@ export const UsersList = () => {
 
   return (
     <div className={s.usersList}>
-      <SettingsTable setBlockStatus={setBlockStatus} />
+      <SettingsTable
+        onChangeText={setSearch}
+        onSearchClear={handleClearSearch}
+        setBlockStatus={setBlockStatus}
+        textValue={search}
+      />
 
       <UsersListTable
         data={data}
