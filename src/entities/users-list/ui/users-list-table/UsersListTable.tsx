@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { GetUsersListQuery } from '@/entities/users-list/api/usersListApi.generated'
+import { useBanUserMutation } from '@/features/ban-user/api/banUserApi.generated'
 import {
   BanIcon,
   DeleteUserIcon,
   FilterIcon,
   MoreHorizontal,
+  Nullable,
   PRODUCTION_PATH,
   useTranslation,
 } from '@/shared'
@@ -15,6 +17,7 @@ import {
   DropDownMenu,
   Head,
   HeadCell,
+  Modal,
   Pagination,
   Root,
   Row,
@@ -22,6 +25,7 @@ import {
   Typography,
 } from '@belozerov-egor/ui-libs'
 import Link from 'next/link'
+import NProgress from 'nprogress'
 
 import s from './UsersListTable.module.scss'
 
@@ -42,7 +46,35 @@ export const UsersListTable = (props: Props) => {
   const pagination = data?.getUsers.pagination
   const { t } = useTranslation()
 
+  const [modalOpen, setOpenModal] = useState<boolean>(false)
   const [currentUser, setCurrentUser] =
+    useState<Nullable<{ userId: number; userName: string }>>(null)
+  const [reasonToBan, setReasonToBan] = useState<string>('')
+  const [banUserMutation] = useBanUserMutation()
+
+  const openModalHandler = () => {
+    setOpenModal(true)
+  }
+
+  const closeModalHandler = () => {
+    setOpenModal(false)
+  }
+
+  const banUserHandler = () => {
+    if (currentUser) {
+      NProgress.start()
+      banUserMutation({
+        variables: {
+          banReason: reasonToBan,
+          userId: currentUser.userId,
+        },
+      }).then(() => {
+        NProgress.done()
+        closeModalHandler()
+      })
+    }
+  }
+
   const headOptions = [
     { headText: t.usersList.userId, sortByKey: 'id' },
     { headText: t.usersList.userName, sortByKey: 'userName' },
@@ -79,7 +111,7 @@ export const UsersListTable = (props: Props) => {
     },
     {
       component: (
-        <div className={s.itemActivity}>
+        <div className={s.itemActivity} onClick={openModalHandler}>
           <BanIcon />
           <Typography color={'primary'} variant={'regular14'}>
             Ban in the system
@@ -99,6 +131,11 @@ export const UsersListTable = (props: Props) => {
       ),
       id: 3,
     },
+  ]
+  const reasonsToBan = [
+    { value: 'Bad behavior' },
+    { value: 'Advertising placement' },
+    { value: 'Another reason' },
   ]
   const tableData = users?.map(user => {
     const onSetCurrentUserHandler = () =>
@@ -162,6 +199,31 @@ export const UsersListTable = (props: Props) => {
         />
         <Typography variant={'regular14'}>{t.usersList.paginationSelect.onPage}</Typography>
       </div>
+
+      <Modal
+        buttonBlockClassName={s.buttonBlock}
+        callBack={banUserHandler}
+        onClose={closeModalHandler}
+        open={modalOpen}
+        showCloseButton
+        title={'Ban user'}
+        titleFirstButton={'Yes'}
+        titleSecondButton={'No'}
+      >
+        <div className={s.modalContentBlock}>
+          <Typography variant={'regular16'}>
+            Are you sure to ban this user, {currentUser?.userName}?
+          </Typography>
+          <div className={s.selectBlock}>
+            <SelectBox
+              onValueChange={setReasonToBan}
+              options={reasonsToBan}
+              placeholder={'Reasons to ban'}
+              selectContentClassName={s.selectContent}
+            />
+          </div>
+        </div>
+      </Modal>
     </>
   )
 }
