@@ -4,6 +4,7 @@ import { SettingsTable, UsersListTable } from '@/entities/users-list'
 import { useGetUsersListQuery } from '@/entities/users-list/api/usersListApi.generated'
 import { Nullable, useDebounce } from '@/shared'
 import { BlockStatus, SortDirection } from '@/shared/api/generated/types.generated'
+import NProgress from 'nprogress'
 
 import s from './UsersList.module.scss'
 
@@ -51,8 +52,9 @@ export const UsersList = () => {
     setSearchTerm(debouncedValue)
   }, [debouncedValue])
 
-  if (loading) {
-    return <span>...loading</span>
+  if (typeof document !== 'undefined') {
+    loading && NProgress.start()
+    !loading && NProgress.done()
   }
 
   return (

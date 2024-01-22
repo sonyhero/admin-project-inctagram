@@ -42,6 +42,7 @@ export const UsersListTable = (props: Props) => {
   const pagination = data?.getUsers.pagination
   const { t } = useTranslation()
 
+  const [currentUser, setCurrentUser] =
   const headOptions = [
     { headText: t.usersList.userId, sortByKey: 'id' },
     { headText: t.usersList.userName, sortByKey: 'userName' },
@@ -100,6 +101,9 @@ export const UsersListTable = (props: Props) => {
     },
   ]
   const tableData = users?.map(user => {
+    const onSetCurrentUserHandler = () =>
+      setCurrentUser({ userId: user.id, userName: user.userName })
+
     return (
       <Row key={user.id}>
         <Cell>
@@ -124,7 +128,9 @@ export const UsersListTable = (props: Props) => {
         <Cell>
           <DropDownMenu
             align={'end'}
+            isOpenAfterItemClick={false}
             items={dropDownMenuSize}
+            onItemClick={onSetCurrentUserHandler}
             side={'bottom'}
             trigger={<MoreHorizontal />}
           />
