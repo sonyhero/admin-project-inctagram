@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 import { GetUsersListQuery } from '@/entities/users-list/api/usersListApi.generated'
-import { useBanUserMutation } from '@/features/ban-user/api/banUserApi.generated'
+import { useBanUserMutation, useUnBanMutation } from '@/features/ban-user/api/banUserApi.generated'
 import {
   BanIcon,
   DeleteUserIcon,
@@ -9,6 +9,7 @@ import {
   MoreHorizontal,
   Nullable,
   PRODUCTION_PATH,
+  UnBanIcon,
   useTranslation,
 } from '@/shared'
 import {
@@ -51,6 +52,7 @@ export const UsersListTable = (props: Props) => {
     useState<Nullable<{ userId: number; userName: string }>>(null)
   const [reasonToBan, setReasonToBan] = useState<string>('')
   const [banUserMutation] = useBanUserMutation()
+  const [unBanMutation] = useUnBanMutation()
 
   const openModalHandler = () => {
     setOpenModal(true)
@@ -97,47 +99,64 @@ export const UsersListTable = (props: Props) => {
       </HeadCell>
     )
   })
-  const dropDownMenuSize = [
-    {
-      component: (
-        <div className={s.itemActivity}>
-          <DeleteUserIcon />
-          <Typography color={'primary'} variant={'regular14'}>
-            Delete User
-          </Typography>
-        </div>
-      ),
-      id: 1,
-    },
-    {
-      component: (
-        <div className={s.itemActivity} onClick={openModalHandler}>
-          <BanIcon />
-          <Typography color={'primary'} variant={'regular14'}>
-            Ban in the system
-          </Typography>
-        </div>
-      ),
-      id: 2,
-    },
-    {
-      component: (
-        <div className={s.itemActivity}>
-          <MoreHorizontal />
-          <Typography color={'primary'} variant={'regular14'}>
-            More Information
-          </Typography>
-        </div>
-      ),
-      id: 3,
-    },
-  ]
+
   const reasonsToBan = [
     { value: 'Bad behavior' },
     { value: 'Advertising placement' },
     { value: 'Another reason' },
   ]
+
   const tableData = users?.map(user => {
+    const unBanUserHandler = () => {
+      debugger
+      NProgress.start()
+      unBanMutation({
+        variables: {
+          userId: user.id,
+        },
+      }).then(() => {
+        NProgress.done()
+      })
+    }
+
+    const dropDownMenuSize = [
+      {
+        component: (
+          <div className={s.itemActivity}>
+            <DeleteUserIcon />
+            <Typography color={'primary'} variant={'regular14'}>
+              Delete User
+            </Typography>
+          </div>
+        ),
+        id: 1,
+      },
+      {
+        component: (
+          <div
+            className={s.itemActivity}
+            onClick={user.userBan ? unBanUserHandler : openModalHandler}
+          >
+            {user.userBan ? <UnBanIcon /> : <BanIcon />}
+            <Typography color={'primary'} variant={'regular14'}>
+              {user.userBan ? 'Unban' : 'Ban'} in the system
+            </Typography>
+          </div>
+        ),
+        id: 2,
+      },
+      {
+        component: (
+          <div className={s.itemActivity}>
+            <MoreHorizontal />
+            <Typography color={'primary'} variant={'regular14'}>
+              More Information
+            </Typography>
+          </div>
+        ),
+        id: 3,
+      },
+    ]
     const onSetCurrentUserHandler = () =>
       setCurrentUser({ userId: user.id, userName: user.userName })
 
