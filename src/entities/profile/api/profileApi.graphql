@@ -3,6 +3,7 @@ query getProfile($userID: Int!) {
         profile {
             createdAt
             id
+            firstName
             lastName
             userName
             avatars {

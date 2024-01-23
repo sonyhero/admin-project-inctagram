@@ -16,6 +16,7 @@ export type GetProfileQuery = {
       __typename?: 'Profile'
       avatars?: Array<{ __typename?: 'Avatar'; height: number; url: string; width: number }> | null
       createdAt: any
+      firstName?: null | string
       id: number
       lastName?: null | string
       userName?: null | string
@@ -29,6 +30,7 @@ export const GetProfileDocument = gql`
       profile {
         createdAt
         id
+        firstName
         lastName
         userName
         avatars {
