@@ -1,32 +1,69 @@
-query getListPayments(
-    $userID: Int!
-    $pagesize: Int!
+query getAllPayments(
+    $pageSize: Int!
     $pageNumber: Int!
     $sortBy: String!
     $sortDirection: SortDirection
 ) {
-    getListPayments(
-        userId: $userID
-        pageSize: $pagesize
+    getAllPayments(
+        pageSize: $pageSize
         pageNumber: $pageNumber
         sortBy: $sortBy
         sortDirection: $sortDirection
     ) {
         items {
-            paymentType
-            price
+            amount
+            avatars {
+                fileSize
+                height
+                url
+                width
+            }
+            createdAt
+            currency
+            id
+            paymentMethod
+            type
+            userId
+            userName
+        }
+    }
+}
+
+query getListPaymentsById(
+$userId: Int!
+    $pageSize: Int!
+    $pageNumber: Int!
+    $sortBy: String!
+    $sortDirection: SortDirection
+) {
+    getListPaymentsById (
+        pageNumber: $pageNumber
+        pageSize: $pageSize
+        sortBy: $sortBy
+        sortDirection: $sortDirection
+        userId: $userId
+    ) {
+        page
+        pagesCount
+        pageSize
+        totalCount
+        items {
+            businessAccountId
             dateOfPayment
             endDate
+            id
+            paymentType
+            payments {
+                amount
+                createdAt
+                currency
+                id
+                userId
+            }
+            price
+            startDate
             status
             type
-            startDate
-            payments {
-                userId
-                id
-                currency
-                amount
-            }
-            id
         }
     }
 }
