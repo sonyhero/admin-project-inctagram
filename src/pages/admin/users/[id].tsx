@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react'
 
-import { PATH, getAuthLayout } from '@/shared'
+import { useGetProfileQuery } from '@/entities/profile/api/profileApi.generated'
+import { PATH, getAuthLayout, getNumericDayMonthTime } from '@/shared'
 import {
   ArrowIosBack,
   Body,
@@ -16,7 +17,7 @@ import {
 } from '@belozerov-egor/ui-libs'
 import Image from 'next/image'
 import Link from 'next/link'
-// import { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 
 import s from './User.module.scss'
 
@@ -45,13 +46,22 @@ const OptionsTab = [
 const paginationOptions = [{ value: 5 }, { value: 10 }, { value: 20 }]
 
 function UserPage() {
-  // const { query } = useRouter()
-  // const profileId = query.id
+  const { locale, query } = useRouter()
+  const userID = Number(query.id)
+  const { data } = useGetProfileQuery({
+    variables: {
+      userID,
+    },
+  })
   const [activeTab, setActiveTab] = useState(OptionsTab[0].value)
 
-  const handleTabSort = (value: string) => {
-    setActiveTab(value)
-  }
+  const firstName = data?.getProfileInfo.profile.firstName
+  const lastName = data?.getProfileInfo.profile.lastName
+  const userName = data?.getProfileInfo.profile.userName
+  const createdAt = data?.getProfileInfo.profile.createdAt
+  const avatar = data?.getProfileInfo.profile.avatars?.[0].url ?? ''
+
+  console.log(avatar)
 
   const getActivePage = useCallback(() => {
     if (activeTab === 'Uploaded photos') {
@@ -127,11 +137,13 @@ function UserPage() {
       </Link>
       <div className={s.mainInfo}>
         <div className={s.avaAndName}>
-          <Image alt={'avatar'} height={60} src={''} width={60} />
+          <Image alt={'avatar'} height={60} src={avatar} width={60} />
           <div>
-            <Typography variant={'h1'}>Ivan Yakimenko</Typography>
+            <Typography variant={'h1'}>
+              {firstName} {lastName}
+            </Typography>
             <Typography className={s.userName} variant={'regular14'}>
-              Ivan.sr.yakimenko
+              {userName}
             </Typography>
           </div>
         </div>
@@ -141,18 +153,20 @@ function UserPage() {
             <Typography color={'secondary'} variant={'regular14'}>
               UserID
             </Typography>
-            <Typography variant={'regular16'}>21331QErQe21</Typography>
+            <Typography variant={'regular16'}>{userID}</Typography>
           </div>
           <div className={s.item}>
             <Typography color={'secondary'} variant={'regular14'}>
               Profile Creation Date
             </Typography>
-            <Typography variant={'regular16'}>12.12.2022</Typography>
+            <Typography variant={'regular16'}>
+              {getNumericDayMonthTime(createdAt, locale as string, true)}
+            </Typography>
           </div>
         </div>
       </div>
       <div style={{ marginBottom: '36px' }}>
-        <TabSwitcher activeTab={activeTab} onChangeCallback={handleTabSort} options={OptionsTab} />
+        <TabSwitcher activeTab={activeTab} onChangeCallback={setActiveTab} options={OptionsTab} />
       </div>
 
       {getActivePage()}
