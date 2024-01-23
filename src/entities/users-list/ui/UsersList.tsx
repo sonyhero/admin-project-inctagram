@@ -17,10 +17,9 @@ export const UsersList = () => {
     direction: SortDirection.Asc,
     key: 'id',
   })
-  const [blockStatus, setBlockStatus] =
-    useState<Nullable<BlockStatus.Blocked | undefined>>(undefined)
+  const [blockStatus, setBlockStatus] = useState<Nullable<BlockStatus.Blocked | undefined>>(null)
 
-  const { data, loading } = useGetUsersListQuery({
+  const { data, loading, refetch } = useGetUsersListQuery({
     variables: {
       blockStatus,
       pageNumber,
@@ -48,6 +47,11 @@ export const UsersList = () => {
     setSearch('')
   }
 
+  const handleSetBlockStatus = (value: Nullable<BlockStatus.Blocked | undefined>) => {
+    refetch()
+    setBlockStatus(value)
+  }
+
   useEffect(() => {
     setSearchTerm(debouncedValue)
   }, [debouncedValue])
@@ -60,9 +64,10 @@ export const UsersList = () => {
   return (
     <div className={s.usersList}>
       <SettingsTable
+        blockStatus={blockStatus}
         onChangeText={setSearch}
         onSearchClear={handleClearSearch}
-        setBlockStatus={setBlockStatus}
+        setBlockStatus={handleSetBlockStatus}
         textValue={search}
       />
 
@@ -70,6 +75,7 @@ export const UsersList = () => {
         data={data}
         pageNumber={pageNumber}
         pageSize={pageSize}
+        refetchData={refetch}
         setPageNumber={setPageNumber}
         setPageSize={setPageSize}
         setSort={handleSort}

@@ -8,6 +8,7 @@ import {
   FilterIcon,
   MoreHorizontal,
   Nullable,
+  PATH,
   PRODUCTION_PATH,
   UnBanIcon,
   useTranslation,
@@ -26,6 +27,7 @@ import {
   Typography,
 } from '@belozerov-egor/ui-libs'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import NProgress from 'nprogress'
 
 import s from './UsersListTable.module.scss'
@@ -34,6 +36,7 @@ type Props = {
   data: GetUsersListQuery | undefined
   pageNumber: number
   pageSize: number
+  refetchData: () => void
   setPageNumber: (value: number) => void
   setPageSize: (value: number) => void
   setSort: (value: string) => void
@@ -42,10 +45,11 @@ type Props = {
 const paginationOptions = [{ value: 5 }, { value: 10 }, { value: 20 }]
 
 export const UsersListTable = (props: Props) => {
-  const { data, pageNumber, pageSize, setPageNumber, setPageSize, setSort } = props
+  const { data, pageNumber, pageSize, refetchData, setPageNumber, setPageSize, setSort } = props
   const users = data?.getUsers.users
   const pagination = data?.getUsers.pagination
   const { t } = useTranslation()
+  const { push } = useRouter()
 
   const [modalOpen, setOpenModal] = useState<boolean>(false)
   const [currentUser, setCurrentUser] =
@@ -70,10 +74,15 @@ export const UsersListTable = (props: Props) => {
           banReason: reasonToBan,
           userId: currentUser.userId,
         },
-      }).then(() => {
-        NProgress.done()
-        closeModalHandler()
       })
+        .then(() => {
+          NProgress.done()
+          refetchData()
+          closeModalHandler()
+        })
+        .catch(() => {
+          console.log('error')
+        })
     }
   }
 
@@ -108,17 +117,23 @@ export const UsersListTable = (props: Props) => {
 
   const tableData = users?.map(user => {
     const unBanUserHandler = () => {
-      debugger
       NProgress.start()
       unBanMutation({
         variables: {
           userId: user.id,
         },
-      }).then(() => {
-        NProgress.done()
       })
+        .then(() => {
+          refetchData()
+          NProgress.done()
+        })
+        .catch(() => {
+          console.log('error')
+        })
     }
-
+    const linkToProfileInformation = () => {
+      push(`${PATH.USERS}/${user.id}`)
+    }
     const dropDownMenuSize = [
       {
         component: (
@@ -147,7 +162,7 @@ export const UsersListTable = (props: Props) => {
       },
       {
         component: (
-          <div className={s.itemActivity}>
+          <div className={s.itemActivity} onClick={linkToProfileInformation}>
             <MoreHorizontal />
             <Typography color={'primary'} variant={'regular14'}>
               More Information
