@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 
 import { SettingsTable, UsersListTable } from '@/entities/users-list'
 import { useGetUsersListQuery } from '@/entities/users-list/api/usersListApi.generated'
-import { Nullable, useDebounce } from '@/shared'
-import { BlockStatus, SortDirection } from '@/shared/api/generated/types.generated'
+import { Nullable, useDebounce, useTableSort } from '@/shared'
+import { BlockStatus } from '@/shared/api/generated/types.generated'
 import NProgress from 'nprogress'
 
 import s from './UsersList.module.scss'
@@ -13,10 +13,7 @@ export const UsersList = () => {
   const [pageSize, setPageSize] = useState<number>(5)
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [search, setSearch] = useState<string>('')
-  const [sort, setSort] = useState<{ direction: SortDirection; key: string }>({
-    direction: SortDirection.Asc,
-    key: 'id',
-  })
+  const { handleSort, sort } = useTableSort({ initialKey: 'id' })
   const [blockStatus, setBlockStatus] = useState<Nullable<BlockStatus.Blocked | undefined>>(null)
 
   const { data, loading, refetch } = useGetUsersListQuery({
@@ -31,17 +28,6 @@ export const UsersList = () => {
   })
 
   const debouncedValue = useDebounce<string>(search, 400)
-
-  const handleSort = (key: string) => {
-    if (sort.key !== key) {
-      setSort({ direction: SortDirection.Asc, key })
-    }
-
-    setSort({
-      direction: sort?.direction === SortDirection.Asc ? SortDirection.Desc : SortDirection.Asc,
-      key,
-    })
-  }
 
   const handleClearSearch = () => {
     setSearch('')
@@ -73,12 +59,12 @@ export const UsersList = () => {
 
       <UsersListTable
         data={data}
+        handleSort={handleSort}
         pageNumber={pageNumber}
         pageSize={pageSize}
         refetchData={refetch}
         setPageNumber={setPageNumber}
         setPageSize={setPageSize}
-        setSort={handleSort}
       />
     </div>
   )

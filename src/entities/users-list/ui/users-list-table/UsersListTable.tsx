@@ -34,18 +34,18 @@ import s from './UsersListTable.module.scss'
 
 type Props = {
   data: GetUsersListQuery | undefined
+  handleSort: (value: string) => void
   pageNumber: number
   pageSize: number
   refetchData: () => void
   setPageNumber: (value: number) => void
   setPageSize: (value: number) => void
-  setSort: (value: string) => void
 }
 
 const paginationOptions = [{ value: 5 }, { value: 10 }, { value: 20 }]
 
 export const UsersListTable = (props: Props) => {
-  const { data, pageNumber, pageSize, refetchData, setPageNumber, setPageSize, setSort } = props
+  const { data, handleSort, pageNumber, pageSize, refetchData, setPageNumber, setPageSize } = props
   const users = data?.getUsers.users
   const pagination = data?.getUsers.pagination
   const { t } = useTranslation()
@@ -95,7 +95,7 @@ export const UsersListTable = (props: Props) => {
   ]
 
   const headTable = headOptions.map((option, index) => {
-    const onClickHandler = () => !!option.sortByKey && setSort(option.sortByKey)
+    const onClickHandler = () => !!option.sortByKey && handleSort(option.sortByKey)
 
     return (
       <HeadCell key={index}>
