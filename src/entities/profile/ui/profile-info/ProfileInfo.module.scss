@@ -1,6 +1,10 @@
 .mainInfo {
   margin-top: 1.44rem;
 
+  .avatar {
+    border-radius: 50%;
+  }
+
   .avaAndName {
     display: flex;
     gap: 1.5rem;

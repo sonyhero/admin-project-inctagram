@@ -5,7 +5,7 @@ import { ProfileInfo } from '@/entities/profile/ui/profile-info'
 import { UserPaymentsTable } from '@/entities/profile/ui/user-payments-table'
 import { UserPhotoTable } from '@/entities/profile/ui/user-photo-table'
 import { PATH } from '@/shared'
-import { ArrowIosBack, TabSwitcher, Typography } from '@belozerov-egor/ui-libs'
+import { ArrowBack, TabSwitcher, Typography } from '@belozerov-egor/ui-libs'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -58,7 +58,7 @@ export const Profile = () => {
   return (
     <div>
       <Link className={s.back} href={PATH.USERS}>
-        <ArrowIosBack />
+        <ArrowBack />
         <Typography variant={'medium14'}>Back to Users List</Typography>
       </Link>
       {data && <ProfileInfo data={data} />}

@@ -26,7 +26,7 @@ export const ProfileInfo = (props: Props) => {
   return (
     <div className={s.mainInfo}>
       <div className={s.avaAndName}>
-        <Image alt={'avatar'} height={60} src={avatar} width={60} />
+        <Image alt={'avatar'} className={s.avatar} height={60} src={avatar} width={60} />
         <div>
           <Typography variant={'h1'}>
             {firstName} {lastName}
