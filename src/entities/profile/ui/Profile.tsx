@@ -35,10 +35,10 @@ const optionsTab = [
 
 export const Profile = () => {
   const { query } = useRouter()
-  const userID = Number(query.id)
+  const userId = Number(query.id)
   const { data } = useGetProfileQuery({
     variables: {
-      userID,
+      userId,
     },
   })
   const [activeTab, setActiveTab] = useState(optionsTab[0].value)

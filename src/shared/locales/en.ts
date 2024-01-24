@@ -29,6 +29,15 @@ export const en = {
     statistics: 'Statistics',
     useList: 'User list',
   },
+  user: {
+    paymentsTable: {
+      dateOfPayment: 'Date of Payment',
+      endOfSubscriptions: 'End date of subscription',
+      paymentType: 'Payment Type',
+      price: 'Price',
+      subscriptionType: 'Subscription Type',
+    },
+  },
   usersList: {
     dateAdded: 'Date added',
     paginationSelect: {

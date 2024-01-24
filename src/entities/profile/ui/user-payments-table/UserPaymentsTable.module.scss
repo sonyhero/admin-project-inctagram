@@ -9,3 +9,16 @@
     height: 1.5rem;
   }
 }
+
+.headItem {
+  display: flex;
+  align-items: center;
+
+  .headItemText {
+    margin-right: 0.5rem;
+  }
+
+  svg {
+    position: relative;
+  }
+}

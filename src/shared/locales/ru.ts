@@ -29,6 +29,15 @@ export const ru: LocaleType = {
     statistics: 'Статистика',
     useList: 'Список пользователей',
   },
+  user: {
+    paymentsTable: {
+      dateOfPayment: 'Дата платежа',
+      endOfSubscriptions: 'Дата окончания подписки',
+      paymentType: 'Тип оплаты',
+      price: 'Стоимость',
+      subscriptionType: 'Тип подписки',
+    },
+  },
   usersList: {
     dateAdded: 'Дата добавления',
     paginationSelect: {
