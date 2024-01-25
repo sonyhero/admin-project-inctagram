@@ -1,13 +1,16 @@
-.usersList {
-  overflow: auto;
+.table {
+  margin-bottom: 2.25rem;
+}
+
+.pagination {
   display: flex;
-  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  margin-top: 1rem;
 
-  height: calc(100vh - 3.75rem);
-  padding: 2.25rem 4rem 1.625rem 1.5rem;
-
-  .table {
-    margin-bottom: 2.25rem;
+  .selectPagination {
+    width: 4.5rem;
+    height: 1.5rem;
   }
 }
 
@@ -28,5 +31,56 @@
 
   svg {
     position: relative;
+  }
+}
+
+.link {
+  color: var(--color-light-100);
+  text-decoration: none;
+  border: none;
+
+  &:hover {
+    color: var(--color-accent-100);
+  }
+
+  &:active {
+    color: var(--color-accent-700);
+  }
+}
+
+.userId {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.modalContentBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 1.13rem;
+  align-items: flex-start;
+
+  width: 100%;
+
+  .selectBlock {
+    width: 100%;
+    margin-top: 1.5rem;
+  }
+}
+
+.selectContent {
+  z-index: 103;
+}
+
+.buttonBlock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+
+  button {
+    width: 25%;
   }
 }

@@ -11,6 +11,10 @@ export const ru: LocaleType = {
         'Адрес электронной почты или пароль неверны. Попробуйте еще раз, пожалуйста',
     },
   },
+  error404: {
+    backToMain: 'Вернуться на главную',
+    pageNotFound: 'Извините! Страница не найдена!',
+  },
   header: {
     admin: 'Админ',
     en: 'English',
@@ -25,9 +29,28 @@ export const ru: LocaleType = {
     statistics: 'Статистика',
     useList: 'Список пользователей',
   },
+  user: {
+    paymentsTable: {
+      dateOfPayment: 'Дата платежа',
+      endOfSubscriptions: 'Дата окончания подписки',
+      paymentType: 'Тип оплаты',
+      price: 'Стоимость',
+      subscriptionType: 'Тип подписки',
+    },
+  },
   usersList: {
     dateAdded: 'Дата добавления',
+    paginationSelect: {
+      onPage: 'На Странице',
+      show: 'Показать',
+    },
     profileLink: 'Ссылка на профиль',
+    search: 'Поиск',
+    settingsTableDescription: {
+      blocked: 'Заблокирован',
+      notBlocked: 'Не заблокирован',
+      notSelected: 'Не выбрано',
+    },
     userId: 'ID пользователя',
     userName: 'Имя пользователя',
   },

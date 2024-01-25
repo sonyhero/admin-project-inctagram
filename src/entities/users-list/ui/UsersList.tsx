@@ -1,24 +1,22 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import { UsersListTable } from '@/entities/users-list'
+import { SettingsTable, UsersListTable } from '@/entities/users-list'
 import { useGetUsersListQuery } from '@/entities/users-list/api/usersListApi.generated'
-import { useDebounce } from '@/shared'
-import { BlockStatus, SortDirection } from '@/shared/api/generated/types.generated'
+import { Nullable, useDebounce, useTableSort } from '@/shared'
+import { BlockStatus } from '@/shared/api/generated/types.generated'
+import NProgress from 'nprogress'
+
+import s from './UsersList.module.scss'
 
 export const UsersList = () => {
-  const [pageNumber, setPageNumber] = useState(1)
-  const [pageSize, setPageSize] = useState(10)
-  const [searchTerm, setSearchTerm] = useState('')
-  const [search, setSearch] = useState('')
-  const [sort, setSort] = useState<{ direction: SortDirection; key: string }>({
-    direction: SortDirection.Asc,
-    key: 'id',
-  })
-  const [block, setBlock] = useState('active')
+  const [pageNumber, setPageNumber] = useState<number>(1)
+  const [pageSize, setPageSize] = useState<number>(5)
+  const [searchTerm, setSearchTerm] = useState<string>('')
+  const [search, setSearch] = useState<string>('')
+  const { handleSort, sort } = useTableSort({ initialKey: 'id' })
+  const [blockStatus, setBlockStatus] = useState<Nullable<BlockStatus.Blocked | undefined>>(null)
 
-  const blockStatus = block === 'active' ? undefined : BlockStatus.Blocked
-
-  const { data, loading } = useGetUsersListQuery({
+  const { data, loading, refetch } = useGetUsersListQuery({
     variables: {
       blockStatus,
       pageNumber,
@@ -28,30 +26,46 @@ export const UsersList = () => {
       sortDirection: sort.direction,
     },
   })
+
   const debouncedValue = useDebounce<string>(search, 400)
 
-  const handleSort = (value: any) => {
-    if (!value) {
-      setSort({
-        direction: SortDirection.Asc,
-        key: 'id',
-      })
-    } else {
-      setSort(value)
-    }
-    console.log('value', value)
-  }
-
-  const handleSearchTerm = (value: string) => {
-    setSearch(value)
-  }
   const handleClearSearch = () => {
     setSearch('')
+  }
+
+  const handleSetBlockStatus = (value: Nullable<BlockStatus.Blocked | undefined>) => {
+    refetch()
+    setBlockStatus(value)
   }
 
   useEffect(() => {
     setSearchTerm(debouncedValue)
   }, [debouncedValue])
 
-  return <UsersListTable data={data} />
+  if (typeof document !== 'undefined') {
+    loading && NProgress.start()
+    !loading && NProgress.done()
+  }
+
+  return (
+    <div className={s.usersList}>
+      <SettingsTable
+        blockStatus={blockStatus}
+        onChangeText={setSearch}
+        onSearchClear={handleClearSearch}
+        setBlockStatus={handleSetBlockStatus}
+        textValue={search}
+      />
+
+      <UsersListTable
+        data={data}
+        handleSort={handleSort}
+        pageNumber={pageNumber}
+        pageSize={pageSize}
+        refetchData={refetch}
+        setPageNumber={setPageNumber}
+        setPageSize={setPageSize}
+      />
+    </div>
+  )
 }

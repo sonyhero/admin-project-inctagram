@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "graphql-codegen && next dev",
+    "dev": "next dev",
     "build": "eslint --fix src/**/*.{tsx,ts,jsx,js} --no-error-on-unmatched-pattern && stylelint --fix src/{,*/}*.{scss,css} --allow-empty-input && next build",
     "start": "next start",
     "format": "prettier --write src",
@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.8.8",
-    "@belozerov-egor/ui-libs": "^0.0.9",
+    "@belozerov-egor/ui-libs": "^0.0.13",
     "@fontsource/inter": "^5.0.8",
     "clsx": "^2.1.0",
     "graphql": "^16.8.1",
@@ -40,7 +40,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
     "sass": "^1.69.7",
-    "stylelint": "^16.0.2",
+    "stylelint": "^15.11.0",
     "typescript": "^5.3.3"
   }
 }

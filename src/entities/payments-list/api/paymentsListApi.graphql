@@ -1,32 +1,30 @@
-query getListPayments(
-    $userID: Int!
-    $pagesize: Int!
+query getAllPayments(
+    $pageSize: Int!
     $pageNumber: Int!
     $sortBy: String!
     $sortDirection: SortDirection
 ) {
-    getListPayments(
-        userId: $userID
-        pageSize: $pagesize
+    getAllPayments(
+        pageSize: $pageSize
         pageNumber: $pageNumber
         sortBy: $sortBy
         sortDirection: $sortDirection
     ) {
         items {
-            paymentType
-            price
-            dateOfPayment
-            endDate
-            status
-            type
-            startDate
-            payments {
-                userId
-                id
-                currency
-                amount
+            amount
+            avatars {
+                fileSize
+                height
+                url
+                width
             }
+            createdAt
+            currency
             id
+            paymentMethod
+            type
+            userId
+            userName
         }
     }
 }

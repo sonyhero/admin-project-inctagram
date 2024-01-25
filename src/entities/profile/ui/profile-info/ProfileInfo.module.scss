@@ -1,0 +1,29 @@
+.mainInfo {
+  margin-top: 1.44rem;
+
+  .avatar {
+    border-radius: 50%;
+  }
+
+  .avaAndName {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    .userName {
+      text-decoration-line: underline;
+    }
+  }
+
+  .userIdWrapper {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    margin-bottom: 2.19rem;
+
+    .item {
+      width: 10.75rem;
+    }
+  }
+}

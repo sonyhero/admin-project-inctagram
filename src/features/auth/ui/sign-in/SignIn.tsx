@@ -13,7 +13,7 @@ export const SignIn = () => {
   const [, setAuthToken] = useSessionStorage<string>('authToken')
   const [, setIsLoggedIn] = useSessionStorage<boolean>('isLoggedIn')
   const router = useRouter()
-  const [signInForm, setSignInForm] = useState({ email: '', password: '' })
+  const [signInForm, setSignInForm] = useState({ email: 'admin@gmail.com', password: 'admin' })
   const [errorMessage, setErrorMessage] = useState('')
   const [loginMutation] = useLoginMutation()
   const onChangeTextHandler = (value: string, name: string) => {

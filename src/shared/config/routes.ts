@@ -7,3 +7,7 @@ export const PATH = {
   STATISTICS: '/admin/statistics',
   USERS: '/admin/users',
 }
+
+export const PRODUCTION_PATH = {
+  USER: 'https://inctag.ru/user',
+}
