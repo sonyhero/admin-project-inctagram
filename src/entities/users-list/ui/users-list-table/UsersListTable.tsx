@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 
 import { GetUsersListQuery } from '@/entities/users-list/api/usersListApi.generated'
+import { RemoveUserModal } from '@/features'
 import { useBanUserMutation, useUnBanMutation } from '@/features/ban-user/api/banUserApi.generated'
-import { useRemoveUserMutation } from '@/features/remove-user/api/removeUserApi.generated'
 import {
   BanIcon,
   DeleteUserIcon,
@@ -59,7 +59,6 @@ export const UsersListTable = (props: Props) => {
   const [reasonToBan, setReasonToBan] = useState<string>('')
   const [banUserMutation] = useBanUserMutation()
   const [unBanMutation] = useUnBanMutation()
-  const [removeUserMutation] = useRemoveUserMutation()
 
   const openBanModalHandler = () => {
     setBanModalOpen(true)
@@ -71,10 +70,6 @@ export const UsersListTable = (props: Props) => {
 
   const openRemoveModalHandler = () => {
     setRemoveModalOpen(true)
-  }
-
-  const closeRemoveModalHandler = () => {
-    setRemoveModalOpen(false)
   }
 
   const banUserHandler = () => {
@@ -90,25 +85,6 @@ export const UsersListTable = (props: Props) => {
           NProgress.done()
           refetchData()
           closeBanModalHandler()
-        })
-        .catch(() => {
-          console.log('error')
-        })
-    }
-  }
-
-  const removeUserHandler = () => {
-    if (currentUser) {
-      NProgress.start()
-      removeUserMutation({
-        variables: {
-          userId: currentUser.userId,
-        },
-      })
-        .then(() => {
-          NProgress.done()
-          refetchData()
-          closeRemoveModalHandler()
         })
         .catch(() => {
           console.log('error')
@@ -288,23 +264,12 @@ export const UsersListTable = (props: Props) => {
           </div>
         </div>
       </Modal>
-
-      <Modal
-        buttonBlockClassName={s.buttonBlock}
-        callBack={removeUserHandler}
-        onClose={closeRemoveModalHandler}
+      <RemoveUserModal
+        currentUser={currentUser}
+        onClose={setRemoveModalOpen}
         open={removeModalOpen}
-        showCloseButton
-        title={'Delete user'}
-        titleFirstButton={'Yes'}
-        titleSecondButton={'No'}
-      >
-        <div className={s.modalContentBlock}>
-          <Typography variant={'regular16'}>
-            Are you sure to delete user <strong>{currentUser?.userName}</strong>?
-          </Typography>
-        </div>
-      </Modal>
+        refetchData={refetchData}
+      />
     </>
   )
 }

@@ -1,0 +1,10 @@
+query getProfilePostImages($userId: Int!) {
+    getProfileInfo(userId: $userId) {
+        userName
+        posts {
+            images {
+                url
+            }
+        }
+    }
+}
