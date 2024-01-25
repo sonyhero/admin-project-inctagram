@@ -20,7 +20,7 @@ export const ProfileInfo = (props: Props) => {
   const lastName = data?.getProfileInfo.profile.lastName
   const userName = data?.getProfileInfo.profile.userName
   const createdAt = data?.getProfileInfo.profile.createdAt
-  const avatar = data?.getProfileInfo.profile.avatars?.[0].url ?? ''
+  const avatar = data?.getProfileInfo.profile.avatars?.[0]?.url ?? ''
   const userID = data?.getProfileInfo.profile.id
 
   return (
