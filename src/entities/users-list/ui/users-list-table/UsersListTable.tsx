@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 import { GetUsersListQuery } from '@/entities/users-list/api/usersListApi.generated'
 import { useBanUserMutation, useUnBanMutation } from '@/features/ban-user/api/banUserApi.generated'
+import { useRemoveUserMutation } from '@/features/remove-user/api/removeUserApi.generated'
 import {
   BanIcon,
   DeleteUserIcon,
@@ -51,19 +52,29 @@ export const UsersListTable = (props: Props) => {
   const { t } = useTranslation()
   const { push } = useRouter()
 
-  const [modalOpen, setOpenModal] = useState<boolean>(false)
+  const [banModalOpen, setBanModalOpen] = useState<boolean>(false)
+  const [removeModalOpen, setRemoveModalOpen] = useState<boolean>(false)
   const [currentUser, setCurrentUser] =
     useState<Nullable<{ userId: number; userName: string }>>(null)
   const [reasonToBan, setReasonToBan] = useState<string>('')
   const [banUserMutation] = useBanUserMutation()
   const [unBanMutation] = useUnBanMutation()
+  const [removeUserMutation] = useRemoveUserMutation()
 
-  const openModalHandler = () => {
-    setOpenModal(true)
+  const openBanModalHandler = () => {
+    setBanModalOpen(true)
   }
 
-  const closeModalHandler = () => {
-    setOpenModal(false)
+  const closeBanModalHandler = () => {
+    setBanModalOpen(false)
+  }
+
+  const openRemoveModalHandler = () => {
+    setRemoveModalOpen(true)
+  }
+
+  const closeRemoveModalHandler = () => {
+    setRemoveModalOpen(false)
   }
 
   const banUserHandler = () => {
@@ -78,7 +89,26 @@ export const UsersListTable = (props: Props) => {
         .then(() => {
           NProgress.done()
           refetchData()
-          closeModalHandler()
+          closeBanModalHandler()
+        })
+        .catch(() => {
+          console.log('error')
+        })
+    }
+  }
+
+  const removeUserHandler = () => {
+    if (currentUser) {
+      NProgress.start()
+      removeUserMutation({
+        variables: {
+          userId: currentUser.userId,
+        },
+      })
+        .then(() => {
+          NProgress.done()
+          refetchData()
+          closeRemoveModalHandler()
         })
         .catch(() => {
           console.log('error')
@@ -137,7 +167,7 @@ export const UsersListTable = (props: Props) => {
     const dropDownMenuSize = [
       {
         component: (
-          <div className={s.itemActivity}>
+          <div className={s.itemActivity} onClick={openRemoveModalHandler}>
             <DeleteUserIcon />
             <Typography color={'primary'} variant={'regular14'}>
               Delete User
@@ -150,7 +180,7 @@ export const UsersListTable = (props: Props) => {
         component: (
           <div
             className={s.itemActivity}
-            onClick={user.userBan ? unBanUserHandler : openModalHandler}
+            onClick={user.userBan ? unBanUserHandler : openBanModalHandler}
           >
             {user.userBan ? <UnBanIcon /> : <BanIcon />}
             <Typography color={'primary'} variant={'regular14'}>
@@ -237,8 +267,8 @@ export const UsersListTable = (props: Props) => {
       <Modal
         buttonBlockClassName={s.buttonBlock}
         callBack={banUserHandler}
-        onClose={closeModalHandler}
-        open={modalOpen}
+        onClose={closeBanModalHandler}
+        open={banModalOpen}
         showCloseButton
         title={'Ban user'}
         titleFirstButton={'Yes'}
@@ -246,7 +276,7 @@ export const UsersListTable = (props: Props) => {
       >
         <div className={s.modalContentBlock}>
           <Typography variant={'regular16'}>
-            Are you sure to ban this user, {currentUser?.userName}?
+            Are you sure to ban this user, <strong>{currentUser?.userName}</strong>?
           </Typography>
           <div className={s.selectBlock}>
             <SelectBox
@@ -256,6 +286,23 @@ export const UsersListTable = (props: Props) => {
               selectContentClassName={s.selectContent}
             />
           </div>
+        </div>
+      </Modal>
+
+      <Modal
+        buttonBlockClassName={s.buttonBlock}
+        callBack={removeUserHandler}
+        onClose={closeRemoveModalHandler}
+        open={removeModalOpen}
+        showCloseButton
+        title={'Delete user'}
+        titleFirstButton={'Yes'}
+        titleSecondButton={'No'}
+      >
+        <div className={s.modalContentBlock}>
+          <Typography variant={'regular16'}>
+            Are you sure to delete user <strong>{currentUser?.userName}</strong>?
+          </Typography>
         </div>
       </Modal>
     </>
