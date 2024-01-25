@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 
 import { GetUsersListQuery } from '@/entities/users-list/api/usersListApi.generated'
-import { useBanUserMutation, useUnBanMutation } from '@/features/ban-user/api/banUserApi.generated'
+import { RemoveUserModal } from '@/features'
+import { BanUserModal } from '@/features/ban-user'
+import { useUnBanMutation } from '@/features/ban-user/api/banUserApi.generated'
 import {
   BanIcon,
   DeleteUserIcon,
@@ -19,7 +21,6 @@ import {
   DropDownMenu,
   Head,
   HeadCell,
-  Modal,
   Pagination,
   Root,
   Row,
@@ -51,39 +52,20 @@ export const UsersListTable = (props: Props) => {
   const { t } = useTranslation()
   const { push } = useRouter()
 
-  const [modalOpen, setOpenModal] = useState<boolean>(false)
+  const [banModalOpen, setBanModalOpen] = useState<boolean>(false)
+  const [removeModalOpen, setRemoveModalOpen] = useState<boolean>(false)
+
   const [currentUser, setCurrentUser] =
     useState<Nullable<{ userId: number; userName: string }>>(null)
-  const [reasonToBan, setReasonToBan] = useState<string>('')
-  const [banUserMutation] = useBanUserMutation()
+
   const [unBanMutation] = useUnBanMutation()
 
-  const openModalHandler = () => {
-    setOpenModal(true)
+  const openBanModalHandler = () => {
+    setBanModalOpen(true)
   }
 
-  const closeModalHandler = () => {
-    setOpenModal(false)
-  }
-
-  const banUserHandler = () => {
-    if (currentUser) {
-      NProgress.start()
-      banUserMutation({
-        variables: {
-          banReason: reasonToBan,
-          userId: currentUser.userId,
-        },
-      })
-        .then(() => {
-          NProgress.done()
-          refetchData()
-          closeModalHandler()
-        })
-        .catch(() => {
-          console.log('error')
-        })
-    }
+  const openRemoveModalHandler = () => {
+    setRemoveModalOpen(true)
   }
 
   const headOptions = [
@@ -109,12 +91,6 @@ export const UsersListTable = (props: Props) => {
     )
   })
 
-  const reasonsToBan = [
-    { value: 'Bad behavior' },
-    { value: 'Advertising placement' },
-    { value: 'Another reason' },
-  ]
-
   const tableData = users?.map(user => {
     const unBanUserHandler = () => {
       NProgress.start()
@@ -137,7 +113,7 @@ export const UsersListTable = (props: Props) => {
     const dropDownMenuSize = [
       {
         component: (
-          <div className={s.itemActivity}>
+          <div className={s.itemActivity} onClick={openRemoveModalHandler}>
             <DeleteUserIcon />
             <Typography color={'primary'} variant={'regular14'}>
               Delete User
@@ -150,7 +126,7 @@ export const UsersListTable = (props: Props) => {
         component: (
           <div
             className={s.itemActivity}
-            onClick={user.userBan ? unBanUserHandler : openModalHandler}
+            onClick={user.userBan ? unBanUserHandler : openBanModalHandler}
           >
             {user.userBan ? <UnBanIcon /> : <BanIcon />}
             <Typography color={'primary'} variant={'regular14'}>
@@ -234,30 +210,18 @@ export const UsersListTable = (props: Props) => {
         <Typography variant={'regular14'}>{t.usersList.paginationSelect.onPage}</Typography>
       </div>
 
-      <Modal
-        buttonBlockClassName={s.buttonBlock}
-        callBack={banUserHandler}
-        onClose={closeModalHandler}
-        open={modalOpen}
-        showCloseButton
-        title={'Ban user'}
-        titleFirstButton={'Yes'}
-        titleSecondButton={'No'}
-      >
-        <div className={s.modalContentBlock}>
-          <Typography variant={'regular16'}>
-            Are you sure to ban this user, {currentUser?.userName}?
-          </Typography>
-          <div className={s.selectBlock}>
-            <SelectBox
-              onValueChange={setReasonToBan}
-              options={reasonsToBan}
-              placeholder={'Reasons to ban'}
-              selectContentClassName={s.selectContent}
-            />
-          </div>
-        </div>
-      </Modal>
+      <BanUserModal
+        currentUser={currentUser}
+        onClose={setBanModalOpen}
+        open={banModalOpen}
+        refetchData={refetchData}
+      />
+      <RemoveUserModal
+        currentUser={currentUser}
+        onClose={setRemoveModalOpen}
+        open={removeModalOpen}
+        refetchData={refetchData}
+      />
     </>
   )
 }
