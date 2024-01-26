@@ -5,6 +5,12 @@
   margin: 0 auto;
 
   .main {
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
     flex-grow: 1;
+
+    height: calc(100vh - 3.75rem);
+    padding: 2.25rem 4rem 1.625rem 1.5rem;
   }
 }
