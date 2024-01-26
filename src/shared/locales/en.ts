@@ -48,7 +48,7 @@ export const en = {
     search: 'Search',
     settingsTableDescription: {
       blocked: 'Blocked',
-      notBlocked: 'Not bBocked',
+      notBlocked: 'Not Blocked',
       notSelected: 'Not selected',
     },
     userId: 'User ID',

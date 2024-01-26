@@ -7,7 +7,6 @@ import { SelectBox, TextField } from '@belozerov-egor/ui-libs'
 import s from './SettingsTable.module.scss'
 
 type Props = {
-  blockStatus: Nullable<BlockStatus.Blocked | undefined>
   onChangeText: (value: string) => void
   onSearchClear: () => void
   setBlockStatus: (value: Nullable<BlockStatus.Blocked | undefined>) => void
@@ -15,7 +14,7 @@ type Props = {
 }
 
 export const SettingsTable = (props: Props) => {
-  const { blockStatus, onChangeText, onSearchClear, setBlockStatus, textValue } = props
+  const { onChangeText, onSearchClear, setBlockStatus, textValue } = props
   const { t } = useTranslation()
 
   const options: OptionsType[] = [
@@ -40,7 +39,6 @@ export const SettingsTable = (props: Props) => {
         value={textValue}
       />
       <SelectBox
-        defaultValue={blockStatus}
         onValueChange={setBlockStatus}
         options={options}
         placeholder={t.usersList.settingsTableDescription.notSelected}
