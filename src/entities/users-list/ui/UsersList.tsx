@@ -48,7 +48,6 @@ export const UsersList = () => {
   return (
     <>
       <SettingsTable
-        blockStatus={blockStatus}
         onChangeText={setSearch}
         onSearchClear={handleClearSearch}
         setBlockStatus={handleSetBlockStatus}

@@ -15,16 +15,15 @@ import {
   UnBanIcon,
   useTranslation,
 } from '@/shared'
+import { PaginationWidget } from '@/widgets'
 import {
   Body,
   Cell,
   DropDownMenu,
   Head,
   HeadCell,
-  Pagination,
   Root,
   Row,
-  SelectBox,
   Typography,
 } from '@belozerov-egor/ui-libs'
 import Link from 'next/link'
@@ -42,8 +41,6 @@ type Props = {
   setPageNumber: (value: number) => void
   setPageSize: (value: number) => void
 }
-
-const paginationOptions = [{ value: 5 }, { value: 10 }, { value: 20 }]
 
 export const UsersListTable = (props: Props) => {
   const { data, handleSort, pageNumber, pageSize, refetchData, setPageNumber, setPageSize } = props
@@ -194,22 +191,13 @@ export const UsersListTable = (props: Props) => {
         </Head>
         <Body>{tableData}</Body>
       </Root>
-      <div className={s.pagination}>
-        <Pagination
-          count={pagination?.pagesCount ?? 1}
-          onChange={setPageNumber}
-          page={pageNumber}
-        />
-        <Typography variant={'regular14'}>{t.usersList.paginationSelect.show}</Typography>
-        <SelectBox
-          className={s.selectPagination}
-          defaultValue={pageSize}
-          onValueChange={setPageSize}
-          options={paginationOptions}
-        />
-        <Typography variant={'regular14'}>{t.usersList.paginationSelect.onPage}</Typography>
-      </div>
-
+      <PaginationWidget
+        pageNumber={pageNumber}
+        pageSize={pageSize}
+        pagesCount={pagination?.pagesCount}
+        setPageNumber={setPageNumber}
+        setPageSize={setPageSize}
+      />
       <BanUserModal
         currentUser={currentUser}
         onClose={setBanModalOpen}
