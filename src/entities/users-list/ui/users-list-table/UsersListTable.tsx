@@ -13,6 +13,7 @@ import {
   PATH,
   PRODUCTION_PATH,
   UnBanIcon,
+  getNumericDayMonthTime,
   useTranslation,
 } from '@/shared'
 import { PaginationWidget } from '@/widgets'
@@ -47,7 +48,7 @@ export const UsersListTable = (props: Props) => {
   const users = data?.getUsers.users
   const pagination = data?.getUsers.pagination
   const { t } = useTranslation()
-  const { push } = useRouter()
+  const { locale, push } = useRouter()
 
   const [banModalOpen, setBanModalOpen] = useState<boolean>(false)
   const [removeModalOpen, setRemoveModalOpen] = useState<boolean>(false)
@@ -148,6 +149,8 @@ export const UsersListTable = (props: Props) => {
     const onSetCurrentUserHandler = () =>
       setCurrentUser({ userId: user.id, userName: user.userName })
 
+    const createAt = getNumericDayMonthTime(user.createdAt, locale as string)
+
     return (
       <Row key={user.id}>
         <Cell>
@@ -165,9 +168,7 @@ export const UsersListTable = (props: Props) => {
           </Link>
         </Cell>
         <Cell>
-          <Typography variant={'bold14'}>
-            {new Date(user.createdAt).toLocaleDateString('ru-RU')}
-          </Typography>
+          <Typography variant={'bold14'}>{createAt}</Typography>
         </Cell>
         <Cell>
           <DropDownMenu
