@@ -1,0 +1,22 @@
+.table {
+  margin: 1.5rem 0 2.25rem;
+}
+
+.headItem {
+  display: flex;
+  align-items: center;
+
+  .headItemText {
+    margin-right: 0.5rem;
+  }
+
+  svg {
+    position: relative;
+  }
+}
+
+.user {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}

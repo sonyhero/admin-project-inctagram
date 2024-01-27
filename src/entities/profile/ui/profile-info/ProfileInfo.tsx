@@ -2,8 +2,8 @@ import React from 'react'
 
 import { GetProfileQuery } from '@/entities/profile/api/profileApi.generated'
 import { getNumericDayMonthTime } from '@/shared'
+import { AvatarOwner } from '@/widgets'
 import { Typography } from '@belozerov-egor/ui-libs'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import s from './ProfileInfo.module.scss'
@@ -20,13 +20,13 @@ export const ProfileInfo = (props: Props) => {
   const lastName = data?.getProfileInfo.profile.lastName
   const userName = data?.getProfileInfo.profile.userName
   const createdAt = data?.getProfileInfo.profile.createdAt
-  const avatar = data?.getProfileInfo.profile.avatars?.[0].url ?? ''
+  const avatar = data?.getProfileInfo.profile.avatars?.[0]?.url
   const userID = data?.getProfileInfo.profile.id
 
   return (
     <div className={s.mainInfo}>
       <div className={s.avaAndName}>
-        <Image alt={'avatar'} className={s.avatar} height={60} src={avatar} width={60} />
+        <AvatarOwner avatarOwner={avatar} height={60} width={60} />
         <div>
           <Typography variant={'h1'}>
             {firstName} {lastName}

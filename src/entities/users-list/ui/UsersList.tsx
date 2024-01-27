@@ -6,8 +6,6 @@ import { Nullable, useDebounce, useTableSort } from '@/shared'
 import { BlockStatus } from '@/shared/api/generated/types.generated'
 import NProgress from 'nprogress'
 
-import s from './UsersList.module.scss'
-
 export const UsersList = () => {
   const [pageNumber, setPageNumber] = useState<number>(1)
   const [pageSize, setPageSize] = useState<number>(5)
@@ -48,9 +46,8 @@ export const UsersList = () => {
   }
 
   return (
-    <div className={s.usersList}>
+    <>
       <SettingsTable
-        blockStatus={blockStatus}
         onChangeText={setSearch}
         onSearchClear={handleClearSearch}
         setBlockStatus={handleSetBlockStatus}
@@ -66,6 +63,6 @@ export const UsersList = () => {
         setPageNumber={setPageNumber}
         setPageSize={setPageSize}
       />
-    </div>
+    </>
   )
 }

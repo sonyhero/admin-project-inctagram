@@ -13,18 +13,18 @@ import {
   PATH,
   PRODUCTION_PATH,
   UnBanIcon,
+  getNumericDayMonthTime,
   useTranslation,
 } from '@/shared'
+import { PaginationWidget } from '@/widgets'
 import {
   Body,
   Cell,
   DropDownMenu,
   Head,
   HeadCell,
-  Pagination,
   Root,
   Row,
-  SelectBox,
   Typography,
 } from '@belozerov-egor/ui-libs'
 import Link from 'next/link'
@@ -43,14 +43,12 @@ type Props = {
   setPageSize: (value: number) => void
 }
 
-const paginationOptions = [{ value: 5 }, { value: 10 }, { value: 20 }]
-
 export const UsersListTable = (props: Props) => {
   const { data, handleSort, pageNumber, pageSize, refetchData, setPageNumber, setPageSize } = props
   const users = data?.getUsers.users
   const pagination = data?.getUsers.pagination
   const { t } = useTranslation()
-  const { push } = useRouter()
+  const { locale, push } = useRouter()
 
   const [banModalOpen, setBanModalOpen] = useState<boolean>(false)
   const [removeModalOpen, setRemoveModalOpen] = useState<boolean>(false)
@@ -151,6 +149,8 @@ export const UsersListTable = (props: Props) => {
     const onSetCurrentUserHandler = () =>
       setCurrentUser({ userId: user.id, userName: user.userName })
 
+    const createAt = getNumericDayMonthTime(user.createdAt, locale as string)
+
     return (
       <Row key={user.id}>
         <Cell>
@@ -168,9 +168,7 @@ export const UsersListTable = (props: Props) => {
           </Link>
         </Cell>
         <Cell>
-          <Typography variant={'bold14'}>
-            {new Date(user.createdAt).toLocaleDateString('ru-RU')}
-          </Typography>
+          <Typography variant={'bold14'}>{createAt}</Typography>
         </Cell>
         <Cell>
           <DropDownMenu
@@ -194,22 +192,13 @@ export const UsersListTable = (props: Props) => {
         </Head>
         <Body>{tableData}</Body>
       </Root>
-      <div className={s.pagination}>
-        <Pagination
-          count={pagination?.pagesCount ?? 1}
-          onChange={setPageNumber}
-          page={pageNumber}
-        />
-        <Typography variant={'regular14'}>{t.usersList.paginationSelect.show}</Typography>
-        <SelectBox
-          className={s.selectPagination}
-          defaultValue={pageSize}
-          onValueChange={setPageSize}
-          options={paginationOptions}
-        />
-        <Typography variant={'regular14'}>{t.usersList.paginationSelect.onPage}</Typography>
-      </div>
-
+      <PaginationWidget
+        pageNumber={pageNumber}
+        pageSize={pageSize}
+        pagesCount={pagination?.pagesCount}
+        setPageNumber={setPageNumber}
+        setPageSize={setPageSize}
+      />
       <BanUserModal
         currentUser={currentUser}
         onClose={setBanModalOpen}
