@@ -33,6 +33,7 @@ export type GetAllPaymentsQuery = {
       userId: number
       userName: string
     }>
+    pagesCount: number
   }
 }
 
@@ -49,6 +50,7 @@ export const GetAllPaymentsDocument = gql`
       sortBy: $sortBy
       sortDirection: $sortDirection
     ) {
+      pagesCount
       items {
         amount
         avatars {
