@@ -25,15 +25,16 @@ export const UsersList = () => {
     },
   })
 
+  useEffect(() => {
+    refetch().then(() => {
+      setBlockStatus(blockStatus)
+    })
+  }, [blockStatus, refetch])
+
   const debouncedValue = useDebounce<string>(search, 400)
 
   const handleClearSearch = () => {
     setSearch('')
-  }
-
-  const handleSetBlockStatus = (value: Nullable<BlockStatus.Blocked | undefined>) => {
-    refetch()
-    setBlockStatus(value)
   }
 
   useEffect(() => {
@@ -50,7 +51,7 @@ export const UsersList = () => {
       <SettingsTable
         onChangeText={setSearch}
         onSearchClear={handleClearSearch}
-        setBlockStatus={handleSetBlockStatus}
+        setBlockStatus={setBlockStatus}
         textValue={search}
       />
 

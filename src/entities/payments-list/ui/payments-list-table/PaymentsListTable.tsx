@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { GetAllPaymentsQuery } from '@/entities/payments-list/api/paymentsListApi.generated'
-import { FilterIcon, useTranslation } from '@/shared'
+import { FilterIcon, getNumericDayMonthTime, useTranslation } from '@/shared'
 import { AvatarOwner, PaginationWidget } from '@/widgets'
 import { Body, Cell, Head, HeadCell, Root, Row, Typography } from '@belozerov-egor/ui-libs'
 import { useRouter } from 'next/router'
@@ -49,13 +49,17 @@ export const PaymentsListTable = (props: Props) => {
   })
 
   const tableData = payments?.map(payment => {
+    const createdAt = getNumericDayMonthTime(Number(payment.createdAt), locale as string)
+
     return (
       <Row key={payment.id}>
         <Cell className={s.user}>
           <AvatarOwner avatarOwner={payment.avatars?.[0]?.url} />
           <Typography variant={'bold14'}>{payment.userName}</Typography>
         </Cell>
-        <Cell>{/*<Typography variant={'bold14'}>{date}</Typography>*/}</Cell>
+        <Cell>
+          <Typography variant={'bold14'}>{createdAt}</Typography>
+        </Cell>
         <Cell>
           <Typography variant={'bold14'}>${payment.amount}</Typography>
         </Cell>
