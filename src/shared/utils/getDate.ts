@@ -1,5 +1,5 @@
 export const getNumericDayMonthTime = (
-  dateString: string,
+  dateString: number | string,
   locale: string,
   addDay: boolean = false
 ) => {
