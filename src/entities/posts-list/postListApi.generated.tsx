@@ -20,6 +20,7 @@ export type GetPostsQuery = {
       __typename?: 'Post'
       createdAt: string
       description: string
+      id: number
       images: Array<{ __typename?: 'ImagePost'; height: number; url: string; width: number }>
       ownerId: number
     }>
@@ -56,6 +57,7 @@ export const GetPostsDocument = gql`
         ownerId
         description
         createdAt
+        id
       }
     }
   }

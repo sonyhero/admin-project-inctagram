@@ -16,7 +16,7 @@ const PostsPage = () => {
     variables: {
       // endCursorPostId: '', // value for 'endCursorPostId'
       pageSize: 8,
-      searchTerm: '',
+      searchTerm,
       sortBy: 'asc',
       // sortDirection: ''
     },

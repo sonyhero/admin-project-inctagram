@@ -15,12 +15,13 @@ import s from './Post.module.scss'
 type Props = {
   createdAt: string
   description: string
+  id: number
   images: { height: number; url: string; width: number }[]
   ownerId: number
 }
 
 export const Post = (props: Props) => {
-  const { createdAt, description, images, ownerId } = props
+  const { createdAt, description, id, images, ownerId } = props
   const { locale } = useRouter()
 
   const { data: profile } = useGetProfileQuery({
@@ -37,9 +38,9 @@ export const Post = (props: Props) => {
   return (
     <div className={s.postWrapper}>
       <div className={s.photoBlock}>
-        {/*<Link href={`${PATH.USER}/${ownerId}/${id}`}>*/}
-        <Image alt={'post picture'} height={240} priority src={activeImage} width={240} />{' '}
-        {/*</Link>*/}
+        <Link href={`${PRODUCTION_PATH.USER}/${ownerId}/${id}`}>
+          <Image alt={'post picture'} height={240} priority src={activeImage} width={240} />{' '}
+        </Link>
         <PhotoPagination
           activeIndex={activeIndex}
           changePhotoIndex={setActiveIndex}
@@ -52,7 +53,7 @@ export const Post = (props: Props) => {
         <AvatarOwner avatarOwner={profile?.getProfileInfo?.profile?.avatars?.[0]?.url} />
         <Link className={s.link} href={`${PRODUCTION_PATH.USER}/${ownerId}`}>
           <Typography color={'primary'} variant={'h3'}>
-            URL-Profile
+            {profile?.getProfileInfo.profile.userName}
           </Typography>
         </Link>
       </div>
