@@ -1,0 +1,34 @@
+.postWrapper {
+  width: 14.625rem;
+  height: 24.4375rem;
+
+  .photoBlock {
+    position: relative;
+    width: 240px;
+    height: 240px;
+    margin-bottom: 0.75rem;
+  }
+
+  .urlAndAvatar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 0.75rem;
+
+    .link {
+      text-decoration: none;
+    }
+  }
+
+  .description {
+    overflow: hidden; /* Обрезаем всё за пределами блока */
+    display: -webkit-box; /* Включаем флексбоксы */
+
+    width: 100%;
+
+    word-wrap: break-word;
+
+    -webkit-box-orient: vertical; /* Вертикальная ориентация */
+    -webkit-line-clamp: 3; /* Число отображаемых строк */
+  }
+}
