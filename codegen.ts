@@ -1,5 +1,7 @@
 import { CodegenConfig } from '@graphql-codegen/cli'
 
+export const URL_SCHEMA = 'https://inctagram.work/api/v1/graphql'
+
 const config: CodegenConfig = {
   documents: ['src/**/*.graphql'],
   generates: {
@@ -20,7 +22,7 @@ const config: CodegenConfig = {
     afterAllFileWrite: `node -p "const { execSync } = require('child_process'); const generatedFilePaths = process.argv.slice(1).map((generatedFilePath) => generatedFilePath.replaceAll(String.fromCharCode(92), '')); execSync('pnpm eslint --fix ' + generatedFilePaths.join(' '));"`,
   },
   ignoreNoDocuments: true, // for better experience with the watcher
-  schema: 'https://inctagram.work/api/v1/graphql',
+  schema: URL_SCHEMA,
 }
 
 export default config
