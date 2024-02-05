@@ -14,6 +14,7 @@ import {
   Typography,
 } from '@belozerov-egor/ui-libs'
 import { useRouter } from 'next/router'
+import NProgress from 'nprogress'
 
 import s from './UserPaymentsTable.module.scss'
 
@@ -28,7 +29,7 @@ export const UserPaymentsTable = () => {
   const { locale, query } = useRouter()
   const userId = Number(query.id)
 
-  const { data } = useGetListPaymentsByIdQuery({
+  const { data, loading } = useGetListPaymentsByIdQuery({
     variables: {
       pageNumber,
       pageSize,
@@ -89,6 +90,11 @@ export const UserPaymentsTable = () => {
       </Row>
     )
   })
+
+  if (typeof document !== 'undefined') {
+    loading && NProgress.start()
+    !loading && NProgress.done()
+  }
 
   return (
     <div>
