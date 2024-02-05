@@ -4,6 +4,7 @@ import { useGetPostsQuery } from '@/entities/posts-list/postListApi.generated'
 import { getBaseLayout, useDebounce, useTranslation } from '@/shared'
 import { Post } from '@/widgets/post'
 import { TextField } from '@belozerov-egor/ui-libs'
+import NProgress from 'nprogress'
 
 import s from './PostsList.module.scss'
 
@@ -12,7 +13,7 @@ const PostsPage = () => {
   const [search, setSearch] = useState<string>('')
   const [searchTerm, setSearchTerm] = useState<string>('')
 
-  const { data, error, loading } = useGetPostsQuery({
+  const { data, loading } = useGetPostsQuery({
     variables: {
       // endCursorPostId: '', // value for 'endCursorPostId'
       pageSize: 8,
@@ -35,6 +36,11 @@ const PostsPage = () => {
   const mappedPosts = data?.getPosts.items.map((post, index) => {
     return <Post key={index} {...post} />
   })
+
+  if (typeof document !== 'undefined') {
+    loading && NProgress.start()
+    !loading && NProgress.done()
+  }
 
   return (
     <>
