@@ -24,6 +24,7 @@ export const SignIn = () => {
     }))
   }
   const onSubmitHandler = async () => {
+    //Без проверки if и неправильном логине или пароле логин запрос не проходит и длится бесконечно долго
     if (signInForm.email === 'admin@gmail.com' && signInForm.password === 'admin') {
       NProgress.start()
       try {
