@@ -4,6 +4,7 @@ import { useGetAllPaymentsQuery } from '@/entities/payments-list/api/paymentsLis
 import { PaymentsListTable } from '@/entities/payments-list/ui/payments-list-table'
 import { useDebounce, useTableSort, useTranslation } from '@/shared'
 import { TextField } from '@belozerov-egor/ui-libs'
+import NProgress from 'nprogress'
 
 export const PaymentsList = () => {
   const [pageNumber, setPageNumber] = useState<number>(1)
@@ -13,7 +14,7 @@ export const PaymentsList = () => {
   const { handleSort, sort } = useTableSort({ initialKey: 'createdAt' })
   const { t } = useTranslation()
 
-  const { data } = useGetAllPaymentsQuery({
+  const { data, loading } = useGetAllPaymentsQuery({
     variables: {
       pageNumber,
       pageSize,
@@ -31,6 +32,11 @@ export const PaymentsList = () => {
   useEffect(() => {
     setSearchTerm(debouncedValue)
   }, [debouncedValue])
+
+  if (typeof document !== 'undefined') {
+    loading && NProgress.start()
+    !loading && NProgress.done()
+  }
 
   return (
     <>

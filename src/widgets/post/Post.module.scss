@@ -9,14 +9,24 @@
     margin-bottom: 0.75rem;
   }
 
-  .urlAndAvatar {
+  .postOwnerBlock {
     display: flex;
-    gap: 12px;
     align-items: center;
+    justify-content: space-between;
     margin-bottom: 0.75rem;
 
-    .link {
-      text-decoration: none;
+    .urlAndAvatar {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+
+      .link {
+        text-decoration: none;
+      }
+    }
+
+    .banIcon {
+      cursor: pointer;
     }
   }
 

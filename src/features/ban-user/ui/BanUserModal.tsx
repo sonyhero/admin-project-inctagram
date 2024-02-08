@@ -11,7 +11,7 @@ type Props = {
   currentUser: Nullable<{ userId: number; userName: string }>
   onClose: (value: boolean) => void
   open: boolean
-  refetchData: () => void
+  refetchData?: () => void
 }
 
 export const BanUserModal = (props: Props) => {
@@ -40,7 +40,7 @@ export const BanUserModal = (props: Props) => {
       })
         .then(() => {
           NProgress.done()
-          refetchData()
+          refetchData?.()
           closeBanModalHandler()
         })
         .catch(() => {

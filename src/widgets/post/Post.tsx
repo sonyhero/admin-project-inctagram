@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { useGetProfileQuery } from '@/entities/profile/api/profileApi.generated'
-import { PRODUCTION_PATH, getNumericDayMonthTime } from '@/shared'
+import { BanUserModal } from '@/features/ban-user'
+import { BanIcon, PRODUCTION_PATH, getNumericDayMonthTime } from '@/shared'
 import { usePostImagePagination } from '@/shared/hooks'
 import { PhotoPagination } from '@/shared/ui'
 import { AvatarOwner } from '@/widgets'
@@ -23,6 +24,7 @@ type Props = {
 export const Post = (props: Props) => {
   const { createdAt, description, id, images, ownerId } = props
   const { locale } = useRouter()
+  const [banModalOpen, setBanModalOpen] = useState<boolean>(false)
 
   const { data: profile } = useGetProfileQuery({
     variables: {
@@ -30,10 +32,16 @@ export const Post = (props: Props) => {
     },
   })
 
+  const userName = profile?.getProfileInfo.profile.userName ?? ''
+
   const createAtDate = getNumericDayMonthTime(Number(createdAt), locale as string)
 
   const { activeImage, activeIndex, filterImages, nextImage, prevImage, setActiveIndex } =
     usePostImagePagination({ images })
+
+  const openBanModalHandler = () => {
+    setBanModalOpen(true)
+  }
 
   return (
     <div className={s.postWrapper}>
@@ -49,13 +57,16 @@ export const Post = (props: Props) => {
           photosArr={filterImages}
         />
       </div>
-      <div className={s.urlAndAvatar}>
-        <AvatarOwner avatarOwner={profile?.getProfileInfo?.profile?.avatars?.[0]?.url} />
-        <Link className={s.link} href={`${PRODUCTION_PATH.USER}/${ownerId}`}>
-          <Typography color={'primary'} variant={'h3'}>
-            {profile?.getProfileInfo.profile.userName}
-          </Typography>
-        </Link>
+      <div className={s.postOwnerBlock}>
+        <div className={s.urlAndAvatar}>
+          <AvatarOwner avatarOwner={profile?.getProfileInfo?.profile?.avatars?.[0]?.url} />
+          <Link className={s.link} href={`${PRODUCTION_PATH.USER}/${ownerId}`}>
+            <Typography color={'primary'} variant={'h3'}>
+              {userName}
+            </Typography>
+          </Link>
+        </div>
+        <BanIcon className={s.banIcon} onClick={openBanModalHandler} />
       </div>
       <Typography color={'secondary'} variant={'small'}>
         {createAtDate}
@@ -63,6 +74,11 @@ export const Post = (props: Props) => {
       <Typography className={s.description} color={'primary'} variant={'regular14'}>
         {description}
       </Typography>
+      <BanUserModal
+        currentUser={{ userId: ownerId, userName }}
+        onClose={setBanModalOpen}
+        open={banModalOpen}
+      />
     </div>
   )
 }
