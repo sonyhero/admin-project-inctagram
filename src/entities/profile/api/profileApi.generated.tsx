@@ -14,7 +14,12 @@ export type GetProfileQuery = {
     __typename?: 'ProfileInfoModel'
     profile: {
       __typename?: 'Profile'
-      avatars?: Array<{ __typename?: 'Avatar'; height: number; url: string; width: number }> | null
+      avatars?: Array<{
+        __typename?: 'Avatar'
+        height?: null | number
+        url?: null | string
+        width?: null | number
+      }> | null
       createdAt: any
       firstName?: null | string
       id: number
@@ -34,7 +39,7 @@ export type GetListPaymentsByIdQueryVariables = Types.Exact<{
 
 export type GetListPaymentsByIdQuery = {
   __typename?: 'Query'
-  getListPaymentsById: {
+  getPaymentsById: {
     __typename?: 'PaymentPaginationModel'
     items: Array<{
       __typename?: 'Subscription'
@@ -45,11 +50,11 @@ export type GetListPaymentsByIdQuery = {
       paymentType?: Types.PaymentMethod | null
       payments: Array<{
         __typename?: 'Payment'
-        amount: number
-        createdAt: string
-        currency: Types.CurrencyType
-        id: number
-        userId: number
+        amount?: null | number
+        createdAt?: any | null
+        currency?: Types.CurrencyType | null
+        id?: null | number
+        userId?: null | number
       }>
       price: number
       startDate?: any | null
@@ -134,7 +139,7 @@ export const GetListPaymentsByIdDocument = gql`
     $sortBy: String!
     $sortDirection: SortDirection
   ) {
-    getListPaymentsById(
+    getPaymentsById(
       pageNumber: $pageNumber
       pageSize: $pageSize
       sortBy: $sortBy

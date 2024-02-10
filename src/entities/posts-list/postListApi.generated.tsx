@@ -18,10 +18,15 @@ export type GetPostsQuery = {
     __typename?: 'PostsPaginationModel'
     items: Array<{
       __typename?: 'Post'
-      createdAt: string
+      createdAt: any
       description: string
       id: number
-      images: Array<{ __typename?: 'ImagePost'; height: number; url: string; width: number }>
+      images?: Array<{
+        __typename?: 'ImagePost'
+        height?: null | number
+        url?: null | string
+        width?: null | number
+      }> | null
       ownerId: number
     }>
     pageSize: number
