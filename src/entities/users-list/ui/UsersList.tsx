@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { SettingsTable, UsersListTable } from '@/entities/users-list'
 import { useGetUsersListQuery } from '@/entities/users-list/api/usersListApi.generated'
 import { Nullable, useDebounce, useTableSort } from '@/shared'
-import { BlockStatus } from '@/shared/api/generated/types.generated'
 import NProgress from 'nprogress'
 
 export const UsersList = () => {
@@ -12,11 +11,10 @@ export const UsersList = () => {
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [search, setSearch] = useState<string>('')
   const { handleSort, sort } = useTableSort({ initialKey: 'id' })
-  const [blockStatus, setBlockStatus] = useState<Nullable<BlockStatus.Blocked | undefined>>(null)
+  const [blockStatus, setBlockStatus] = useState<Nullable<boolean>>(null)
 
   const { data, loading, refetch } = useGetUsersListQuery({
     variables: {
-      blockStatus,
       pageNumber,
       pageSize,
       searchTerm,
@@ -25,11 +23,17 @@ export const UsersList = () => {
     },
   })
 
-  useEffect(() => {
-    refetch().then(() => {
-      setBlockStatus(blockStatus)
-    })
-  }, [blockStatus, refetch])
+  //TODO - переделать пагиннацию
+  const filterUsers = () => {
+    switch (blockStatus) {
+      case true:
+        return data?.getUsers.users.filter(user => user.userBan)
+      case false:
+        return data?.getUsers.users.filter(user => !user.userBan)
+      default:
+        return data?.getUsers.users
+    }
+  }
 
   const debouncedValue = useDebounce<string>(search, 400)
 
@@ -60,9 +64,11 @@ export const UsersList = () => {
         handleSort={handleSort}
         pageNumber={pageNumber}
         pageSize={pageSize}
+        pagesCount={data?.getUsers.pagination.pagesCount}
         refetchData={refetch}
         setPageNumber={setPageNumber}
         setPageSize={setPageSize}
+        users={filterUsers()}
       />
     </>
   )

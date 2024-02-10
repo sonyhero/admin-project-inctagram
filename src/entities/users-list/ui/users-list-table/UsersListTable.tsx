@@ -34,19 +34,34 @@ import NProgress from 'nprogress'
 import s from './UsersListTable.module.scss'
 
 type Props = {
-  data: GetUsersListQuery | undefined
+  data?: GetUsersListQuery | undefined
   handleSort: (value: string) => void
   pageNumber: number
   pageSize: number
+  pagesCount?: number
   refetchData: () => void
   setPageNumber: (value: number) => void
   setPageSize: (value: number) => void
+  users?: {
+    createdAt: any
+    id: number
+    userBan?: Nullable<{ createdAt: any; reason: string }>
+    userName: string
+  }[]
 }
 
 export const UsersListTable = (props: Props) => {
-  const { data, handleSort, pageNumber, pageSize, refetchData, setPageNumber, setPageSize } = props
-  const users = data?.getUsers.users
-  const pagination = data?.getUsers.pagination
+  const {
+    handleSort,
+    pageNumber,
+    pageSize,
+    pagesCount,
+    refetchData,
+    setPageNumber,
+    setPageSize,
+    users,
+  } = props
+
   const { t } = useTranslation()
   const { locale, push } = useRouter()
 
@@ -155,8 +170,8 @@ export const UsersListTable = (props: Props) => {
       <Row key={user.id}>
         <Cell>
           <Typography className={s.userId} variant={'bold14'}>
-            {user.userBan && <BanIcon />}
             {user.id}
+            {user.userBan && <BanIcon />}
           </Typography>
         </Cell>
         <Cell>
@@ -195,7 +210,7 @@ export const UsersListTable = (props: Props) => {
       <PaginationWidget
         pageNumber={pageNumber}
         pageSize={pageSize}
-        pagesCount={pagination?.pagesCount}
+        pagesCount={pagesCount}
         setPageNumber={setPageNumber}
         setPageSize={setPageSize}
       />
