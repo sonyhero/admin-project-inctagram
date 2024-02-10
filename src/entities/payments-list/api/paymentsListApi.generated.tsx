@@ -17,20 +17,20 @@ export type GetAllPaymentsQuery = {
     __typename?: 'PaymentsPaginationModel'
     items: Array<{
       __typename?: 'SubscriptionPaymentsModel'
-      amount: number
+      amount?: null | number
       avatars?: Array<{
         __typename?: 'Avatar'
-        fileSize: number
-        height: number
-        url: string
-        width: number
+        fileSize?: null | number
+        height?: null | number
+        url?: null | string
+        width?: null | number
       }> | null
-      createdAt: string
-      currency: Types.CurrencyType
-      id: number
+      createdAt?: any | null
+      currency?: Types.CurrencyType | null
+      id?: null | number
       paymentMethod: Types.PaymentMethod
       type: Types.SubscriptionType
-      userId: number
+      userId?: null | number
       userName: string
     }>
     pagesCount: number

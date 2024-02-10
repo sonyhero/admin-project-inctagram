@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { Nullable } from '@/shared'
 import imageIcon from 'public/imageIcon.svg'
 
 type PostType = {
@@ -32,7 +33,13 @@ export const useModalImagePagination = ({ images }: Props) => {
 }
 
 type PropsType = {
-  array?: any[]
+  array?: Nullable<
+    {
+      height?: Nullable<number>
+      url?: Nullable<string>
+      width?: Nullable<number>
+    }[]
+  >
 }
 
 export const useChangePhotoDirection = ({ array }: PropsType) => {

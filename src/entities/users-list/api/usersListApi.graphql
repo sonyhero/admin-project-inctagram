@@ -4,7 +4,6 @@ query getUsersList(
     $sortBy: String!
     $sortDirection: SortDirection
     $searchTerm: String!
-    $blockStatus: BlockStatus
 ) {
     getUsers(
         pageSize: $pageSize
@@ -12,7 +11,6 @@ query getUsersList(
         sortBy: $sortBy
         sortDirection: $sortDirection
         searchTerm: $searchTerm
-        blockStatus: $blockStatus
     ) {
         users {
             createdAt

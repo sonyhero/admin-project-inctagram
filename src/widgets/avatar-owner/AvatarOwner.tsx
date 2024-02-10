@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { Nullable } from '@/shared'
 import { clsx } from 'clsx'
 import Image from 'next/image'
 import imageIcon from 'public/imageIcon.svg'
@@ -7,7 +8,7 @@ import imageIcon from 'public/imageIcon.svg'
 import s from './AvatarOwner.module.scss'
 
 type Props = {
-  avatarOwner?: string
+  avatarOwner?: Nullable<string | undefined>
   className?: string
   height?: number
   width?: number

@@ -5,7 +5,6 @@ import * as Types from '../../../shared/api/generated/types.generated'
 const defaultOptions = {} as const
 
 export type GetUsersListQueryVariables = Types.Exact<{
-  blockStatus?: Types.InputMaybe<Types.BlockStatus>
   pageNumber?: Types.InputMaybe<Types.Scalars['Int']['input']>
   pageSize: Types.Scalars['Int']['input']
   searchTerm: Types.Scalars['String']['input']
@@ -35,7 +34,6 @@ export const GetUsersListDocument = gql`
     $sortBy: String!
     $sortDirection: SortDirection
     $searchTerm: String!
-    $blockStatus: BlockStatus
   ) {
     getUsers(
       pageSize: $pageSize
@@ -43,7 +41,6 @@ export const GetUsersListDocument = gql`
       sortBy: $sortBy
       sortDirection: $sortDirection
       searchTerm: $searchTerm
-      blockStatus: $blockStatus
     ) {
       users {
         createdAt
@@ -78,7 +75,6 @@ export const GetUsersListDocument = gql`
  *      sortBy: // value for 'sortBy'
  *      sortDirection: // value for 'sortDirection'
  *      searchTerm: // value for 'searchTerm'
- *      blockStatus: // value for 'blockStatus'
  *   },
  * });
  */

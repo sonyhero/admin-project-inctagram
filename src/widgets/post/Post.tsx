@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { useGetProfileQuery } from '@/entities/profile/api/profileApi.generated'
 import { BanUserModal } from '@/features/ban-user'
-import { BanIcon, PRODUCTION_PATH, getNumericDayMonthTime } from '@/shared'
+import { BanIcon, Nullable, PRODUCTION_PATH, getNumericDayMonthTime } from '@/shared'
 import { usePostImagePagination } from '@/shared/hooks'
 import { PhotoPagination } from '@/shared/ui'
 import { AvatarOwner } from '@/widgets'
@@ -17,7 +17,14 @@ type Props = {
   createdAt: string
   description: string
   id: number
-  images: { height: number; url: string; width: number }[]
+  images?: Nullable<
+    {
+      height?: Nullable<number>
+      url?: Nullable<string>
+      width?: Nullable<number>
+    }[]
+  >
+
   ownerId: number
 }
 
