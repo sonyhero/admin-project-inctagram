@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { Nullable } from '@/shared'
 import { ArrowIosBack, ArrowIosForward } from '@belozerov-egor/ui-libs'
 
 import s from './PhotoPagination.module.scss'
@@ -9,7 +10,7 @@ type Props = {
   changePhotoIndex: (index: number) => void
   changePhotoNext: () => void
   changePhotoPrev: () => void
-  photosArr?: any[]
+  photosArr?: Nullable<any[]>
 }
 
 export const PhotoPagination = (props: Props) => {

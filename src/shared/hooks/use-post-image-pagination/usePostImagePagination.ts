@@ -1,13 +1,16 @@
+import { Nullable } from '@/shared'
 import imageIcon from 'public/imageIcon.svg'
 
 import { useChangePhotoDirection } from './useModalImagePagination'
 
 type Props = {
-  images?: {
-    height: number
-    url: string
-    width: number
-  }[]
+  images?: Nullable<
+    {
+      height?: Nullable<number>
+      url?: Nullable<string>
+      width?: Nullable<number>
+    }[]
+  >
   isFilter?: boolean
 }
 
