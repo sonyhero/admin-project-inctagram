@@ -13,7 +13,7 @@ export type GetAllPaymentsQueryVariables = Types.Exact<{
 
 export type GetAllPaymentsQuery = {
   __typename?: 'Query'
-  getAllPayments: {
+  getPayments: {
     __typename?: 'PaymentsPaginationModel'
     items: Array<{
       __typename?: 'SubscriptionPaymentsModel'
@@ -44,7 +44,7 @@ export const GetAllPaymentsDocument = gql`
     $sortBy: String!
     $sortDirection: SortDirection
   ) {
-    getAllPayments(
+    getPayments(
       pageSize: $pageSize
       pageNumber: $pageNumber
       sortBy: $sortBy

@@ -4,7 +4,7 @@ query getAllPayments(
     $sortBy: String!
     $sortDirection: SortDirection
 ) {
-    getAllPayments(
+    getPayments(
         pageSize: $pageSize
         pageNumber: $pageNumber
         sortBy: $sortBy

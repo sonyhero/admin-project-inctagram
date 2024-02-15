@@ -1,5 +1,5 @@
 query getProfile($userId: Int!) {
-    getProfileInfo(userId: $userId) {
+    getUser(userId: $userId) {
         profile {
             createdAt
             id
@@ -22,7 +22,7 @@ query getListPaymentsById(
     $sortBy: String!
     $sortDirection: SortDirection
 ) {
-    getPaymentsById (
+    getPaymentsByUser (
         pageNumber: $pageNumber
         pageSize: $pageSize
         sortBy: $sortBy
