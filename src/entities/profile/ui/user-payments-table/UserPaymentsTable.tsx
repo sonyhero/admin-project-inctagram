@@ -39,8 +39,8 @@ export const UserPaymentsTable = () => {
     },
   })
 
-  const pagesCount = data?.getPaymentsById.pagesCount
-  const pageData = data?.getPaymentsById.items
+  const pagesCount = data?.getPaymentsByUser.pagesCount
+  const pageData = data?.getPaymentsByUser.items
 
   const headOptions = [
     { headText: t.user.paymentsTable.dateOfPayment, sortByKey: 'dateOfPayment' },
