@@ -22,8 +22,8 @@ export const PaymentsListTable = (props: Props) => {
   const { t } = useTranslation()
   const { locale } = useRouter()
 
-  const payments = data?.getAllPayments.items
-  const pagesCount = data?.getAllPayments.pagesCount
+  const payments = data?.getPayments.items
+  const pagesCount = data?.getPayments.pagesCount
 
   const headOptions = [
     { headText: t.usersList.userName, sortByKey: 'userName' },
@@ -49,7 +49,7 @@ export const PaymentsListTable = (props: Props) => {
   })
 
   const tableData = payments?.map(payment => {
-    const createdAt = getNumericDayMonthTime(Number(payment.createdAt), locale as string)
+    const createdAt = getNumericDayMonthTime(payment.createdAt, locale as string)
 
     return (
       <Row key={payment.id}>

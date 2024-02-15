@@ -18,6 +18,7 @@ export const PaymentsList = () => {
     variables: {
       pageNumber,
       pageSize,
+      searchTerm,
       sortBy: sort.key,
       sortDirection: sort.direction,
     },
