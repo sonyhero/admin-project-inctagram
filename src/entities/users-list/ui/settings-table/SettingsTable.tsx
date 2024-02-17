@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { Nullable, useTranslation } from '@/shared'
+import { UserBlockStatus } from '@/shared/api/generated/types.generated'
 import { SelectBox, TextField } from '@belozerov-egor/ui-libs'
 
 import s from './SettingsTable.module.scss'
@@ -8,7 +9,7 @@ import s from './SettingsTable.module.scss'
 type Props = {
   onChangeText: (value: string) => void
   onSearchClear: () => void
-  setBlockStatus: (value: Nullable<boolean>) => void
+  setBlockStatus: (value: Nullable<UserBlockStatus>) => void
   textValue: string
 }
 
@@ -19,11 +20,11 @@ export const SettingsTable = (props: Props) => {
   const options: OptionsType[] = [
     {
       description: t.usersList.settingsTableDescription.blocked,
-      value: true,
+      value: UserBlockStatus.Blocked,
     },
     {
       description: t.usersList.settingsTableDescription.notBlocked,
-      value: false,
+      value: UserBlockStatus.All,
     },
     {
       description: t.usersList.settingsTableDescription.notSelected,
@@ -52,5 +53,5 @@ export const SettingsTable = (props: Props) => {
 
 type OptionsType = {
   description: string
-  value: Nullable<boolean>
+  value: Nullable<UserBlockStatus>
 }

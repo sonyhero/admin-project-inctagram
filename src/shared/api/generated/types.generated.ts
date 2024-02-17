@@ -172,7 +172,7 @@ export type Query = {
   getPaymentsByUser: PaymentPaginationModel
   getPosts: PostsPaginationModel
   getPostsByUser: PostsByUserModel
-  getUser: UserByIdModel
+  getUser: User
   getUsers: UsersPaginationModel
 }
 
@@ -283,15 +283,6 @@ export type UserBan = {
 export enum UserBlockStatus {
   All = 'ALL',
   Blocked = 'BLOCKED',
-}
-
-export type UserByIdModel = {
-  __typename?: 'UserByIdModel'
-  createdAt: Scalars['DateTime']['output']
-  email: Scalars['String']['output']
-  id: Scalars['Int']['output']
-  profile: Profile
-  userName: Scalars['String']['output']
 }
 
 export type UsersPaginationModel = {
