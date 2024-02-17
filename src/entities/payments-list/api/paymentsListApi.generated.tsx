@@ -5,15 +5,16 @@ import * as Types from '../../../shared/api/generated/types.generated'
 const defaultOptions = {} as const
 
 export type GetAllPaymentsQueryVariables = Types.Exact<{
-  pageNumber: Types.Scalars['Int']['input']
+  pageNumber?: Types.InputMaybe<Types.Scalars['Int']['input']>
   pageSize: Types.Scalars['Int']['input']
+  searchTerm: Types.Scalars['String']['input']
   sortBy: Types.Scalars['String']['input']
   sortDirection?: Types.InputMaybe<Types.SortDirection>
 }>
 
 export type GetAllPaymentsQuery = {
   __typename?: 'Query'
-  getAllPayments: {
+  getPayments: {
     __typename?: 'PaymentsPaginationModel'
     items: Array<{
       __typename?: 'SubscriptionPaymentsModel'
@@ -40,15 +41,17 @@ export type GetAllPaymentsQuery = {
 export const GetAllPaymentsDocument = gql`
   query getAllPayments(
     $pageSize: Int!
-    $pageNumber: Int!
+    $pageNumber: Int
     $sortBy: String!
     $sortDirection: SortDirection
+    $searchTerm: String!
   ) {
-    getAllPayments(
+    getPayments(
       pageSize: $pageSize
       pageNumber: $pageNumber
       sortBy: $sortBy
       sortDirection: $sortDirection
+      searchTerm: $searchTerm
     ) {
       pagesCount
       items {
@@ -87,6 +90,7 @@ export const GetAllPaymentsDocument = gql`
  *      pageNumber: // value for 'pageNumber'
  *      sortBy: // value for 'sortBy'
  *      sortDirection: // value for 'sortDirection'
+ *      searchTerm: // value for 'searchTerm'
  *   },
  * });
  */

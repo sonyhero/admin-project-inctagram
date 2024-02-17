@@ -1,12 +1,14 @@
-query getProfilePostImages($userId: Int!) {
-    getProfileInfo(userId: $userId) {
-      posts {
-          height
-          width
-          fileSize
-          url
-          id
-          createdAt
-      }
+query getProfilePostImages($userId: Int!, $endCursorId: Int) {
+    getPostsByUser(userId: $userId, endCursorId: $endCursorId) {
+        pagesCount
+        pageSize
+        totalCount
+        items {
+            createdAt
+            id
+            url
+            width
+            height
+        }
     }
 }

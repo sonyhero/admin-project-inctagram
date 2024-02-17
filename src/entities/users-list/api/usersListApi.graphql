@@ -4,6 +4,7 @@ query getUsersList(
     $sortBy: String!
     $sortDirection: SortDirection
     $searchTerm: String!
+    $statusFilter: UserBlockStatus
 ) {
     getUsers(
         pageSize: $pageSize
@@ -11,6 +12,7 @@ query getUsersList(
         sortBy: $sortBy
         sortDirection: $sortDirection
         searchTerm: $searchTerm
+        statusFilter: $statusFilter
     ) {
         users {
             createdAt
@@ -22,7 +24,10 @@ query getUsersList(
             id
         }
         pagination {
+            pageSize
+            totalCount
             pagesCount
+            page
         }
     }
 }

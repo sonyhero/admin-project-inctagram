@@ -15,11 +15,11 @@ const PostsPage = () => {
 
   const { data, loading } = useGetPostsQuery({
     variables: {
-      // endCursorPostId: '', // value for 'endCursorPostId'
-      pageSize: 8,
+      endCursorPostId: 0,
+      pageSize: 4,
       searchTerm,
-      sortBy: 'asc',
-      // sortDirection: ''
+      sortBy: 'createAd',
+      //   sortDirection: 'decs',
     },
   })
 

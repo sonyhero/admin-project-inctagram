@@ -39,7 +39,7 @@ export const Post = (props: Props) => {
     },
   })
 
-  const userName = profile?.getProfileInfo.profile.userName ?? ''
+  const userName = profile?.getUser.profile.userName ?? ''
 
   const createAtDate = getNumericDayMonthTime(Number(createdAt), locale as string)
 
@@ -66,7 +66,7 @@ export const Post = (props: Props) => {
       </div>
       <div className={s.postOwnerBlock}>
         <div className={s.urlAndAvatar}>
-          <AvatarOwner avatarOwner={profile?.getProfileInfo?.profile?.avatars?.[0]?.url} />
+          <AvatarOwner avatarOwner={profile?.getUser?.profile?.avatars?.[0]?.url} />
           <Link className={s.link} href={`${PRODUCTION_PATH.USER}/${ownerId}`}>
             <Typography color={'primary'} variant={'h3'}>
               {userName}

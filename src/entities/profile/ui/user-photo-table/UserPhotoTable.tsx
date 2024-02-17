@@ -18,7 +18,7 @@ export const UserPhotoTable = () => {
     },
   })
 
-  const mappedPosts = data?.getProfileInfo.posts
+  const mappedPosts = data?.getPostsByUser.items
     ?.filter(img => img.width === 1440)
     .slice(0, 4)
     .map(post => {

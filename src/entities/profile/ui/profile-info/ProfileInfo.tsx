@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { GetProfileQuery } from '@/entities/profile/api/profileApi.generated'
+import { useGetProfileQuery } from '@/entities/profile/api/profileApi.generated'
 import { getNumericDayMonthTime } from '@/shared'
 import { AvatarOwner } from '@/widgets'
 import { Typography } from '@belozerov-egor/ui-libs'
@@ -8,20 +8,22 @@ import { useRouter } from 'next/router'
 
 import s from './ProfileInfo.module.scss'
 
-type Props = {
-  data: GetProfileQuery
-}
+export const ProfileInfo = () => {
+  const { locale, query } = useRouter()
+  const userId = Number(query.id)
 
-export const ProfileInfo = (props: Props) => {
-  const { data } = props
-  const { locale } = useRouter()
+  const { data } = useGetProfileQuery({
+    variables: {
+      userId,
+    },
+  })
 
-  const firstName = data?.getProfileInfo.profile.firstName
-  const lastName = data?.getProfileInfo.profile.lastName
-  const userName = data?.getProfileInfo.profile.userName
-  const createdAt = data?.getProfileInfo.profile.createdAt
-  const avatar = data?.getProfileInfo.profile.avatars?.[0]?.url
-  const userID = data?.getProfileInfo.profile.id
+  const firstName = data?.getUser.profile.firstName
+  const lastName = data?.getUser.profile.lastName
+  const userName = data?.getUser.profile.userName
+  const createdAt = data?.getUser.profile.createdAt
+  const avatar = data?.getUser.profile.avatars?.[0]?.url
+  const userID = data?.getUser.profile.id
 
   return (
     <div className={s.mainInfo}>

@@ -5,35 +5,40 @@ import * as Types from '../../../shared/api/generated/types.generated'
 const defaultOptions = {} as const
 
 export type GetProfilePostImagesQueryVariables = Types.Exact<{
+  endCursorId?: Types.InputMaybe<Types.Scalars['Int']['input']>
   userId: Types.Scalars['Int']['input']
 }>
 
 export type GetProfilePostImagesQuery = {
   __typename?: 'Query'
-  getProfileInfo: {
-    __typename?: 'ProfileInfoModel'
-    posts?: Array<{
+  getPostsByUser: {
+    __typename?: 'PostsByUserModel'
+    items?: Array<{
       __typename?: 'ImagePost'
       createdAt?: any | null
-      fileSize?: null | number
       height?: null | number
       id?: null | number
       url?: null | string
       width?: null | number
     }> | null
+    pageSize: number
+    pagesCount: number
+    totalCount: number
   }
 }
 
 export const GetProfilePostImagesDocument = gql`
-  query getProfilePostImages($userId: Int!) {
-    getProfileInfo(userId: $userId) {
-      posts {
-        height
-        width
-        fileSize
-        url
-        id
+  query getProfilePostImages($userId: Int!, $endCursorId: Int) {
+    getPostsByUser(userId: $userId, endCursorId: $endCursorId) {
+      pagesCount
+      pageSize
+      totalCount
+      items {
         createdAt
+        id
+        url
+        width
+        height
       }
     }
   }
@@ -52,6 +57,7 @@ export const GetProfilePostImagesDocument = gql`
  * const { data, loading, error } = useGetProfilePostImagesQuery({
  *   variables: {
  *      userId: // value for 'userId'
+ *      endCursorId: // value for 'endCursorId'
  *   },
  * });
  */

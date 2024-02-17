@@ -10,13 +10,20 @@ export type GetUsersListQueryVariables = Types.Exact<{
   searchTerm: Types.Scalars['String']['input']
   sortBy: Types.Scalars['String']['input']
   sortDirection?: Types.InputMaybe<Types.SortDirection>
+  statusFilter?: Types.InputMaybe<Types.UserBlockStatus>
 }>
 
 export type GetUsersListQuery = {
   __typename?: 'Query'
   getUsers: {
     __typename?: 'UsersPaginationModel'
-    pagination: { __typename?: 'PaginationModel'; pagesCount: number }
+    pagination: {
+      __typename?: 'PaginationModel'
+      page: number
+      pageSize: number
+      pagesCount: number
+      totalCount: number
+    }
     users: Array<{
       __typename?: 'User'
       createdAt: any
@@ -34,6 +41,7 @@ export const GetUsersListDocument = gql`
     $sortBy: String!
     $sortDirection: SortDirection
     $searchTerm: String!
+    $statusFilter: UserBlockStatus
   ) {
     getUsers(
       pageSize: $pageSize
@@ -41,6 +49,7 @@ export const GetUsersListDocument = gql`
       sortBy: $sortBy
       sortDirection: $sortDirection
       searchTerm: $searchTerm
+      statusFilter: $statusFilter
     ) {
       users {
         createdAt
@@ -52,7 +61,10 @@ export const GetUsersListDocument = gql`
         id
       }
       pagination {
+        pageSize
+        totalCount
         pagesCount
+        page
       }
     }
   }
@@ -75,6 +87,7 @@ export const GetUsersListDocument = gql`
  *      sortBy: // value for 'sortBy'
  *      sortDirection: // value for 'sortDirection'
  *      searchTerm: // value for 'searchTerm'
+ *      statusFilter: // value for 'statusFilter'
  *   },
  * });
  */

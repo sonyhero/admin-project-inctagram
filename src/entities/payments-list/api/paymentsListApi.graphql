@@ -1,14 +1,16 @@
 query getAllPayments(
     $pageSize: Int!
-    $pageNumber: Int!
+    $pageNumber: Int
     $sortBy: String!
     $sortDirection: SortDirection
+    $searchTerm: String!
 ) {
-    getAllPayments(
+    getPayments(
         pageSize: $pageSize
         pageNumber: $pageNumber
         sortBy: $sortBy
         sortDirection: $sortDirection
+        searchTerm: $searchTerm
     ) {
         pagesCount
         items {
