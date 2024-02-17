@@ -1,13 +1,11 @@
 import React, { useCallback, useState } from 'react'
 
-import { useGetProfileQuery } from '@/entities/profile/api/profileApi.generated'
 import { ProfileInfo } from '@/entities/profile/ui/profile-info'
 import { UserPaymentsTable } from '@/entities/profile/ui/user-payments-table'
 import { UserPhotoTable } from '@/entities/profile/ui/user-photo-table'
 import { PATH } from '@/shared'
 import { ArrowBack, TabSwitcher, Typography } from '@belozerov-egor/ui-libs'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 
 import s from './Profile.module.scss'
 
@@ -34,13 +32,6 @@ const optionsTab = [
 ]
 
 export const Profile = () => {
-  const { query } = useRouter()
-  const userId = Number(query.id)
-  const { data } = useGetProfileQuery({
-    variables: {
-      userId,
-    },
-  })
   const [activeTab, setActiveTab] = useState(optionsTab[0].value)
 
   const getActivePage = useCallback(() => {
@@ -61,7 +52,7 @@ export const Profile = () => {
         <ArrowBack />
         <Typography variant={'medium14'}>Back to Users List</Typography>
       </Link>
-      {data && <ProfileInfo data={data} />}
+      <ProfileInfo />
       <div className={s.tabs}>
         <TabSwitcher activeTab={activeTab} onChangeCallback={setActiveTab} options={optionsTab} />
       </div>
