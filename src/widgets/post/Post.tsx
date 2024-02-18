@@ -41,7 +41,7 @@ export const Post = (props: Props) => {
 
   const userName = profile?.getUser.profile.userName ?? ''
 
-  const createAtDate = getNumericDayMonthTime(Number(createdAt), locale as string)
+  const createAtDate = getNumericDayMonthTime(createdAt, locale as string)
 
   const { activeImage, activeIndex, filterImages, nextImage, prevImage, setActiveIndex } =
     usePostImagePagination({ images })
