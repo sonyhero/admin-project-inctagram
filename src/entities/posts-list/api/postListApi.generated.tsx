@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client'
 import * as Apollo from '@apollo/client'
 
-import * as Types from '../../shared/api/generated/types.generated'
+import * as Types from '../../../shared/api/generated/types.generated'
 const defaultOptions = {} as const
 
 export type GetPostsQueryVariables = Types.Exact<{
