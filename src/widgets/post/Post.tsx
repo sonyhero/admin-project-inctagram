@@ -31,6 +31,7 @@ type Props = {
 export const Post = (props: Props) => {
   const { createdAt, description, id, images, ownerId } = props
   const { locale } = useRouter()
+  const [showMore, setShowMore] = useState<boolean>(false)
   const [banModalOpen, setBanModalOpen] = useState<boolean>(false)
 
   const { data: profile } = useGetProfileQuery({
@@ -39,7 +40,7 @@ export const Post = (props: Props) => {
     },
   })
 
-  const userName = profile?.getUser.profile.userName ?? ''
+  const userName = profile?.getUser.profile.userName ?? 'URLProfile'
 
   const createAtDate = getNumericDayMonthTime(createdAt, locale as string)
 
@@ -50,11 +51,15 @@ export const Post = (props: Props) => {
     setBanModalOpen(true)
   }
 
+  const collapseHandler = () => {
+    setShowMore(!showMore)
+  }
+
   return (
     <div className={s.postWrapper}>
       <div className={s.photoBlock}>
         <Link href={`${PRODUCTION_PATH.USER}/${ownerId}/${id}`}>
-          <Image alt={'post picture'} height={240} priority src={activeImage} width={240} />{' '}
+          <Image alt={'post picture'} height={224} priority src={activeImage} width={224} />{' '}
         </Link>
         <PhotoPagination
           activeIndex={activeIndex}
@@ -79,8 +84,14 @@ export const Post = (props: Props) => {
         {createAtDate}
       </Typography>
       <Typography className={s.description} color={'primary'} variant={'regular14'}>
-        {description}
+        {showMore ? description : `${description.substring(0, 90)}`}
       </Typography>
+      {description.length > 90 && (
+        <Typography onClick={collapseHandler} variant={'link'}>
+          {' '}
+          ...{showMore ? 'Hide' : 'Show more'}
+        </Typography>
+      )}
       <BanUserModal
         currentUser={{ userId: ownerId, userName }}
         onClose={setBanModalOpen}
