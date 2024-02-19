@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useGetAllPaymentsQuery } from '@/entities/payments-list/api/paymentsListApi.generated'
 import { PaymentsListTable } from '@/entities/payments-list/ui/payments-list-table'
 import { useDebounce, useTableSort, useTranslation } from '@/shared'
-import { TextField } from '@belozerov-egor/ui-libs'
+import { TextField, Typography } from '@belozerov-egor/ui-libs'
 import NProgress from 'nprogress'
 
 export const PaymentsList = () => {
@@ -48,14 +48,18 @@ export const PaymentsList = () => {
         type={'searchType'}
         value={search}
       />
-      <PaymentsListTable
-        data={data}
-        handleSort={handleSort}
-        pageNumber={pageNumber}
-        pageSize={pageSize}
-        setPageNumber={setPageNumber}
-        setPageSize={setPageSize}
-      />
+      {data?.getPayments.pagesCount ? (
+        <PaymentsListTable
+          data={data}
+          handleSort={handleSort}
+          pageNumber={pageNumber}
+          pageSize={pageSize}
+          setPageNumber={setPageNumber}
+          setPageSize={setPageSize}
+        />
+      ) : (
+        <Typography variant={'bold16'}>No Payments</Typography>
+      )}
     </>
   )
 }
