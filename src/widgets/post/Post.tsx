@@ -94,6 +94,7 @@ export const Post = (props: Props) => {
       )}
       <BanUserModal
         currentUser={{ userId: ownerId, userName }}
+        isBanModal
         onClose={setBanModalOpen}
         open={banModalOpen}
       />

@@ -65,8 +65,13 @@ export const BanUserModal = (props: Props) => {
     }
   }
 
-  const titleFirstButton = reasonToBan ? 'Yes' : undefined
-  const buttonBlockClassName = clsx(s.buttonBlock, { [s.onlyOneButton]: !reasonToBan })
+  const banTitleFirstButton = reasonToBan ? 'Yes' : undefined
+  const unBanTitleFirstButton = 'Yes'
+  const titleFirstButton = isBanModal ? banTitleFirstButton : unBanTitleFirstButton
+
+  const buttonBlockClassName = clsx(s.buttonBlock, {
+    [s.onlyOneButton]: isBanModal && !reasonToBan,
+  })
 
   return (
     <Modal
