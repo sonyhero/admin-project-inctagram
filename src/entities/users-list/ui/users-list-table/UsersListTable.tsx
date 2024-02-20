@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import { GetUsersListQuery } from '@/entities/users-list/api/usersListApi.generated'
 import { RemoveUserModal } from '@/features'
 import { BanUserModal } from '@/features/ban-user'
-import { useUnBanMutation } from '@/features/ban-user/api/banUserApi.generated'
 import {
   BanIcon,
   DeleteUserIcon,
@@ -29,7 +28,6 @@ import {
 } from '@belozerov-egor/ui-libs'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import NProgress from 'nprogress'
 
 import s from './UsersListTable.module.scss'
 
@@ -66,15 +64,18 @@ export const UsersListTable = (props: Props) => {
   const { locale, push } = useRouter()
 
   const [banModalOpen, setBanModalOpen] = useState<boolean>(false)
+  const [unBanModalOpen, setUnBanModalOpen] = useState<boolean>(false)
   const [removeModalOpen, setRemoveModalOpen] = useState<boolean>(false)
 
   const [currentUser, setCurrentUser] =
     useState<Nullable<{ userId: number; userName: string }>>(null)
 
-  const [unBanMutation] = useUnBanMutation()
-
   const openBanModalHandler = () => {
     setBanModalOpen(true)
+  }
+
+  const openUnBanModalHandler = () => {
+    setUnBanModalOpen(true)
   }
 
   const openRemoveModalHandler = () => {
@@ -105,21 +106,6 @@ export const UsersListTable = (props: Props) => {
   })
 
   const tableData = users?.map(user => {
-    const unBanUserHandler = () => {
-      NProgress.start()
-      unBanMutation({
-        variables: {
-          userId: user.id,
-        },
-      })
-        .then(() => {
-          refetchData()
-          NProgress.done()
-        })
-        .catch(() => {
-          console.log('error')
-        })
-    }
     const linkToProfileInformation = () => {
       push(`${PATH.USERS}/${user.id}`)
     }
@@ -139,7 +125,7 @@ export const UsersListTable = (props: Props) => {
         component: (
           <div
             className={s.itemActivity}
-            onClick={user.userBan ? unBanUserHandler : openBanModalHandler}
+            onClick={user.userBan ? openUnBanModalHandler : openBanModalHandler}
           >
             {user.userBan ? <UnBanIcon /> : <BanIcon />}
             <Typography color={'primary'} variant={'regular14'}>
@@ -216,8 +202,16 @@ export const UsersListTable = (props: Props) => {
       />
       <BanUserModal
         currentUser={currentUser}
+        isBanModal
         onClose={setBanModalOpen}
         open={banModalOpen}
+        refetchData={refetchData}
+      />
+      <BanUserModal
+        currentUser={currentUser}
+        isBanModal={false}
+        onClose={setUnBanModalOpen}
+        open={unBanModalOpen}
         refetchData={refetchData}
       />
       <RemoveUserModal
