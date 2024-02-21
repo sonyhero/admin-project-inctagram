@@ -21,7 +21,7 @@ export const usePostImagePagination = ({ images, isFilter = true }: Props) => {
     array: filterImages,
   })
 
-  const activeImage = (filterImages && filterImages[activeIndex].url) ?? imageIcon
+  const activeImage = (filterImages && filterImages[activeIndex]?.url) ?? imageIcon
 
   return { activeImage, activeIndex, filterImages, nextImage, prevImage, setActiveIndex }
 }
