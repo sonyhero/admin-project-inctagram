@@ -1,6 +1,11 @@
-.posts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
+.postsBlock {
+  overflow: auto;
+  height: calc(100vh - 3.75rem);
   margin: 1.5rem 0 2.25rem;
+
+  .posts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
 }
