@@ -9,7 +9,7 @@ import s from './SettingsTable.module.scss'
 type Props = {
   onChangeText: (value: string) => void
   onSearchClear: () => void
-  setBlockStatus: (value: Nullable<UserBlockStatus>) => void
+  setBlockStatus: (value: UserBlockStatus) => void
   textValue: string
 }
 
@@ -26,10 +26,10 @@ export const SettingsTable = (props: Props) => {
       description: t.usersList.settingsTableDescription.notBlocked,
       value: UserBlockStatus.All,
     },
-    {
-      description: t.usersList.settingsTableDescription.notSelected,
-      value: null,
-    },
+    // {
+    //   description: t.usersList.settingsTableDescription.notSelected,
+    //   value: null,
+    // },
   ]
 
   return (
@@ -45,7 +45,7 @@ export const SettingsTable = (props: Props) => {
       <SelectBox
         onValueChange={setBlockStatus}
         options={options}
-        placeholder={t.usersList.settingsTableDescription.notSelected}
+        placeholder={t.usersList.settingsTableDescription.notBlocked}
       />
     </div>
   )

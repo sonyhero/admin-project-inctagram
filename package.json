@@ -20,7 +20,8 @@
     "next": "14.0.4",
     "nprogress": "^0.2.0",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-infinite-scroll-component": "^6.1.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.0",

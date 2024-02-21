@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 
 import { SettingsTable, UsersListTable } from '@/entities/users-list'
 import { useGetUsersListQuery } from '@/entities/users-list/api/usersListApi.generated'
-import { Nullable, useDebounce, useTableSort } from '@/shared'
+import { useDebounce, useTableSort } from '@/shared'
 import { UserBlockStatus } from '@/shared/api/generated/types.generated'
+import { Typography } from '@belozerov-egor/ui-libs'
 import NProgress from 'nprogress'
 
 export const UsersList = () => {
@@ -12,7 +13,7 @@ export const UsersList = () => {
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [search, setSearch] = useState<string>('')
   const { handleSort, sort } = useTableSort({ initialKey: 'id' })
-  const [blockStatus, setBlockStatus] = useState<Nullable<UserBlockStatus>>(null)
+  const [blockStatus, setBlockStatus] = useState<UserBlockStatus>(UserBlockStatus.All)
 
   const { data, loading, refetch } = useGetUsersListQuery({
     variables: {
@@ -24,6 +25,10 @@ export const UsersList = () => {
       statusFilter: blockStatus,
     },
   })
+
+  useEffect(() => {
+    refetch()
+  }, [blockStatus, refetch])
 
   const debouncedValue = useDebounce<string>(search, 400)
 
@@ -40,6 +45,11 @@ export const UsersList = () => {
     !loading && NProgress.done()
   }
 
+  const message =
+    data?.getUsers.pagination.pagesCount === 0 &&
+    blockStatus === UserBlockStatus.Blocked &&
+    'No banned users'
+
   return (
     <>
       <SettingsTable
@@ -48,18 +58,20 @@ export const UsersList = () => {
         setBlockStatus={setBlockStatus}
         textValue={search}
       />
-
-      <UsersListTable
-        data={data}
-        handleSort={handleSort}
-        pageNumber={pageNumber}
-        pageSize={pageSize}
-        pagesCount={data?.getUsers.pagination.pagesCount}
-        refetchData={refetch}
-        setPageNumber={setPageNumber}
-        setPageSize={setPageSize}
-        users={data?.getUsers.users}
-      />
+      {!!data?.getUsers.pagination.pagesCount && (
+        <UsersListTable
+          data={data}
+          handleSort={handleSort}
+          pageNumber={pageNumber}
+          pageSize={pageSize}
+          pagesCount={data?.getUsers.pagination.pagesCount}
+          refetchData={refetch}
+          setPageNumber={setPageNumber}
+          setPageSize={setPageSize}
+          users={data?.getUsers.users}
+        />
+      )}
+      <Typography variant={'bold16'}>{message}</Typography>
     </>
   )
 }

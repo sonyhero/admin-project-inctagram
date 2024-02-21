@@ -57,9 +57,16 @@ export const Post = (props: Props) => {
 
   return (
     <div className={s.postWrapper}>
-      <div className={s.photoBlock}>
+      <div className={`${s.photoBlock} ${showMore && s.collapsePhotoBlock}`}>
         <Link href={`${PRODUCTION_PATH.USER}/${ownerId}/${id}`}>
-          <Image alt={'post picture'} height={224} priority src={activeImage} width={224} />{' '}
+          <Image
+            alt={'post picture'}
+            className={`${s.postImage} ${showMore && s.collapsePostImage}`}
+            height={200}
+            priority
+            src={activeImage}
+            width={200}
+          />{' '}
         </Link>
         <PhotoPagination
           activeIndex={activeIndex}
@@ -84,16 +91,16 @@ export const Post = (props: Props) => {
         {createAtDate}
       </Typography>
       <Typography className={s.description} color={'primary'} variant={'regular14'}>
-        {showMore ? description : `${description.substring(0, 90)}`}
+        {showMore ? description.substring(0, 240) : description.substring(0, 90)}
       </Typography>
       {description.length > 90 && (
         <Typography onClick={collapseHandler} variant={'link'}>
-          {' '}
           ...{showMore ? 'Hide' : 'Show more'}
         </Typography>
       )}
       <BanUserModal
         currentUser={{ userId: ownerId, userName }}
+        isBanModal
         onClose={setBanModalOpen}
         open={banModalOpen}
       />
