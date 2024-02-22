@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.8.8",
-    "@belozerov-egor/ui-libs": "^0.0.13",
+    "@belozerov-egor/ui-libs": "^0.0.14",
     "@fontsource/inter": "^5.0.8",
     "clsx": "^2.1.0",
     "graphql": "^16.8.1",

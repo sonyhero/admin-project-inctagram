@@ -13,6 +13,10 @@
 
 .onlyOneButton {
   justify-content: flex-end;
+
+  button:first-child {
+    display: none;
+  }
 }
 
 .modalContentBlock {
@@ -26,6 +30,10 @@
   .selectBlock {
     width: 100%;
     margin-top: 1.5rem;
+  }
+
+  .textArea {
+    width: 100%;
   }
 }
 
