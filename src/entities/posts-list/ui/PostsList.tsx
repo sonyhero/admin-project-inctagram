@@ -112,7 +112,7 @@ export const PostsList = () => {
         type={'searchType'}
         value={search}
       />
-      {data?.getPosts.pagesCount ? (
+      {!!data?.getPosts.items && (
         <div className={s.postsBlock} id={scrollableID}>
           <InfiniteScroll
             className={s.posts}
@@ -126,9 +126,8 @@ export const PostsList = () => {
             {mappedPosts}
           </InfiniteScroll>
         </div>
-      ) : (
-        <Typography variant={'bold16'}>No Posts</Typography>
       )}
+      {!loading && !data?.getPosts.items && <Typography variant={'bold16'}>No Posts</Typography>}
     </>
   )
 }
