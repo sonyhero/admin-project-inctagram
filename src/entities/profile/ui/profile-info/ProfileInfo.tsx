@@ -1,9 +1,10 @@
 import React from 'react'
 
 import { useGetProfileQuery } from '@/entities/profile/api/profileApi.generated'
-import { getNumericDayMonthTime } from '@/shared'
+import { PRODUCTION_PATH, getNumericDayMonthTime } from '@/shared'
 import { AvatarOwner } from '@/widgets'
 import { Typography } from '@belozerov-egor/ui-libs'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import s from './ProfileInfo.module.scss'
@@ -33,9 +34,7 @@ export const ProfileInfo = () => {
           <Typography variant={'h1'}>
             {firstName} {lastName}
           </Typography>
-          <Typography className={s.userName} variant={'regular14'}>
-            {userName}
-          </Typography>
+          <Link href={`${PRODUCTION_PATH.USER}/  ${userID}`}>{userName}</Link>
         </div>
       </div>
 
