@@ -283,6 +283,7 @@ export type UserBan = {
 export enum UserBlockStatus {
   All = 'ALL',
   Blocked = 'BLOCKED',
+  Unblocked = 'UNBLOCKED',
 }
 
 export type UsersPaginationModel = {
