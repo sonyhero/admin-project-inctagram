@@ -5,7 +5,9 @@ import { useGetPostsQuery } from '@/entities/posts-list/api/postListApi.generate
 import { useDebounce, useTranslation } from '@/shared'
 import { Post } from '@/widgets/post'
 import { TextField, Typography } from '@belozerov-egor/ui-libs'
+import Image from 'next/image'
 import NProgress from 'nprogress'
+import loader from 'public/loader.svg'
 
 import s from './PostsList.module.scss'
 
@@ -26,7 +28,7 @@ export const PostsList = () => {
     },
   })
 
-  const endCursorPostId = data?.getPosts.items.slice(-1)[0].id
+  const endCursorPostId = data?.getPosts.items.slice(-1)[0]?.id
 
   const loadMore = useCallback(() => {
     NProgress.start()
@@ -112,7 +114,8 @@ export const PostsList = () => {
         type={'searchType'}
         value={search}
       />
-      {!!data?.getPosts.items && (
+
+      {!!data?.getPosts.items && !!data?.getPosts.pagesCount && (
         <div className={s.postsBlock} id={scrollableID}>
           <InfiniteScroll
             className={s.posts}
@@ -127,7 +130,10 @@ export const PostsList = () => {
           </InfiniteScroll>
         </div>
       )}
-      {!loading && !data?.getPosts.items && <Typography variant={'bold16'}>No Posts</Typography>}
+      {loading && <Image alt={'loader'} src={loader} />}
+      {!loading && (!data?.getPosts.items || !data?.getPosts.pagesCount) && (
+        <Typography variant={'bold16'}>No Posts</Typography>
+      )}
     </>
   )
 }

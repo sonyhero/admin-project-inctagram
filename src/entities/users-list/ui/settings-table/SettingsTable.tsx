@@ -24,12 +24,12 @@ export const SettingsTable = (props: Props) => {
     },
     {
       description: t.usersList.settingsTableDescription.notBlocked,
+      value: UserBlockStatus.Unblocked,
+    },
+    {
+      description: t.usersList.settingsTableDescription.notSelected,
       value: UserBlockStatus.All,
     },
-    // {
-    //   description: t.usersList.settingsTableDescription.notSelected,
-    //   value: null,
-    // },
   ]
 
   return (
@@ -45,7 +45,7 @@ export const SettingsTable = (props: Props) => {
       <SelectBox
         onValueChange={setBlockStatus}
         options={options}
-        placeholder={t.usersList.settingsTableDescription.notBlocked}
+        placeholder={t.usersList.settingsTableDescription.notSelected}
       />
     </div>
   )
