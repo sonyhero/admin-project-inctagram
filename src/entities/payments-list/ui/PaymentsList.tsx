@@ -4,7 +4,9 @@ import { useGetAllPaymentsQuery } from '@/entities/payments-list/api/paymentsLis
 import { PaymentsListTable } from '@/entities/payments-list/ui/payments-list-table'
 import { useDebounce, useTableSort, useTranslation } from '@/shared'
 import { TextField, Typography } from '@belozerov-egor/ui-libs'
+import Image from 'next/image'
 import NProgress from 'nprogress'
+import loader from 'public/loader.svg'
 
 export const PaymentsList = () => {
   const [pageNumber, setPageNumber] = useState<number>(1)
@@ -48,7 +50,7 @@ export const PaymentsList = () => {
         type={'searchType'}
         value={search}
       />
-      {data?.getPayments.pagesCount ? (
+      {!!data?.getPayments.items && !!data?.getPayments.pagesCount && (
         <PaymentsListTable
           data={data}
           handleSort={handleSort}
@@ -57,7 +59,9 @@ export const PaymentsList = () => {
           setPageNumber={setPageNumber}
           setPageSize={setPageSize}
         />
-      ) : (
+      )}
+      {loading && <Image alt={'loader'} src={loader} />}
+      {!loading && (!data?.getPayments.items || !data?.getPayments.pagesCount) && (
         <Typography variant={'bold16'}>No Payments</Typography>
       )}
     </>

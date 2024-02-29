@@ -5,7 +5,9 @@ import { useGetUsersListQuery } from '@/entities/users-list/api/usersListApi.gen
 import { useDebounce, useTableSort } from '@/shared'
 import { UserBlockStatus } from '@/shared/api/generated/types.generated'
 import { Typography } from '@belozerov-egor/ui-libs'
+import Image from 'next/image'
 import NProgress from 'nprogress'
+import loader from 'public/loader.svg'
 
 export const UsersList = () => {
   const [pageNumber, setPageNumber] = useState<number>(1)
@@ -45,11 +47,6 @@ export const UsersList = () => {
     !loading && NProgress.done()
   }
 
-  const message =
-    data?.getUsers.pagination.pagesCount === 0 &&
-    blockStatus === UserBlockStatus.Blocked &&
-    'No banned users'
-
   return (
     <>
       <SettingsTable
@@ -58,7 +55,7 @@ export const UsersList = () => {
         setBlockStatus={setBlockStatus}
         textValue={search}
       />
-      {!!data?.getUsers.pagination.pagesCount && (
+      {!!data?.getUsers.users && !!data?.getUsers.pagination.pagesCount && (
         <UsersListTable
           data={data}
           handleSort={handleSort}
@@ -71,7 +68,10 @@ export const UsersList = () => {
           users={data?.getUsers.users}
         />
       )}
-      <Typography variant={'bold16'}>{message}</Typography>
+      {loading && <Image alt={'loader'} src={loader} />}
+      {!loading && (!data?.getUsers.users || !data?.getUsers.pagination.pagesCount) && (
+        <Typography variant={'bold16'}>No users</Typography>
+      )}
     </>
   )
 }

@@ -11,7 +11,7 @@ export type GetProfileQueryVariables = Types.Exact<{
 export type GetProfileQuery = {
   __typename?: 'Query'
   getUser: {
-    __typename?: 'UserByIdModel'
+    __typename?: 'User'
     profile: {
       __typename?: 'Profile'
       avatars?: Array<{
