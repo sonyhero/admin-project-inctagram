@@ -25,7 +25,7 @@ export const UserPhotoTable = () => {
     },
   })
 
-  const endCursorId = data?.getPostsByUser?.items?.slice(-1)[0].id
+  const endCursorId = data?.getPostsByUser?.items?.slice(-1)[0]?.id
 
   const loadMore = useCallback(() => {
     NProgress.start()

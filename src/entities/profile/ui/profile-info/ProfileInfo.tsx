@@ -34,7 +34,7 @@ export const ProfileInfo = () => {
           <Typography variant={'h1'}>
             {firstName} {lastName}
           </Typography>
-          <Link href={`${PRODUCTION_PATH.USER}/  ${userID}`}>{userName}</Link>
+          <Link href={`${PRODUCTION_PATH.USER}/${userID}`}>{userName}</Link>
         </div>
       </div>
 
