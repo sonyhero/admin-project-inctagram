@@ -28,3 +28,17 @@ query getPosts(
         }
     }
 }
+
+subscription postsSubscription {
+    postAdded {
+        images {
+            url
+            height
+            width
+        }
+        ownerId
+        description
+        createdAt
+        id
+    }
+}

@@ -42,7 +42,7 @@ export type GetListPaymentsByIdQuery = {
   getPaymentsByUser: {
     __typename?: 'PaymentPaginationModel'
     items: Array<{
-      __typename?: 'Subscription'
+      __typename?: 'SubscriptionByPaymentModel'
       businessAccountId: number
       dateOfPayment?: any | null
       endDate?: any | null

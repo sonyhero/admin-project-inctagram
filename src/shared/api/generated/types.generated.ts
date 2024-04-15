@@ -32,6 +32,23 @@ export enum CurrencyType {
   Usd = 'USD',
 }
 
+export type Follow = {
+  __typename?: 'Follow'
+  createdAt: Scalars['DateTime']['output']
+  id: Scalars['Int']['output']
+  userId: Scalars['Int']['output']
+  userName?: Maybe<Scalars['String']['output']>
+}
+
+export type FollowPaginationModel = {
+  __typename?: 'FollowPaginationModel'
+  items: Array<Follow>
+  page: Scalars['Int']['output']
+  pageSize: Scalars['Int']['output']
+  pagesCount: Scalars['Int']['output']
+  totalCount: Scalars['Int']['output']
+}
+
 export type ImagePost = {
   __typename?: 'ImagePost'
   createdAt?: Maybe<Scalars['DateTime']['output']>
@@ -101,7 +118,7 @@ export enum PaymentMethod {
 
 export type PaymentPaginationModel = {
   __typename?: 'PaymentPaginationModel'
-  items: Array<Subscription>
+  items: Array<SubscriptionByPaymentModel>
   page: Scalars['Int']['output']
   pageSize: Scalars['Int']['output']
   pagesCount: Scalars['Int']['output']
@@ -168,12 +185,30 @@ export type Profile = {
 
 export type Query = {
   __typename?: 'Query'
+  getFollowers: FollowPaginationModel
+  getFollowing: FollowPaginationModel
   getPayments: PaymentsPaginationModel
   getPaymentsByUser: PaymentPaginationModel
   getPosts: PostsPaginationModel
   getPostsByUser: PostsByUserModel
   getUser: User
   getUsers: UsersPaginationModel
+}
+
+export type QueryGetFollowersArgs = {
+  pageNumber?: InputMaybe<Scalars['Int']['input']>
+  pageSize?: InputMaybe<Scalars['Int']['input']>
+  sortBy?: InputMaybe<Scalars['String']['input']>
+  sortDirection?: InputMaybe<SortDirection>
+  userId: Scalars['Int']['input']
+}
+
+export type QueryGetFollowingArgs = {
+  pageNumber?: InputMaybe<Scalars['Int']['input']>
+  pageSize?: InputMaybe<Scalars['Int']['input']>
+  sortBy?: InputMaybe<Scalars['String']['input']>
+  sortDirection?: InputMaybe<SortDirection>
+  userId: Scalars['Int']['input']
 }
 
 export type QueryGetPaymentsArgs = {
@@ -232,6 +267,11 @@ export enum StatusSubscriptionType {
 
 export type Subscription = {
   __typename?: 'Subscription'
+  postAdded: Post
+}
+
+export type SubscriptionByPaymentModel = {
+  __typename?: 'SubscriptionByPaymentModel'
   businessAccountId: Scalars['Int']['output']
   dateOfPayment?: Maybe<Scalars['DateTime']['output']>
   endDate?: Maybe<Scalars['DateTime']['output']>
