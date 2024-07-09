@@ -1,12 +1,22 @@
 import { useSessionStorage } from '@/shared'
-import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client'
+import { ApolloClient, InMemoryCache, createHttpLink, split } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
+import { WebSocketLink } from '@apollo/client/link/ws'
+import { getMainDefinition } from '@apollo/client/utilities'
+import { SubscriptionClient } from 'subscriptions-transport-ws'
 
-import { URL_SCHEMA } from '../../../codegen'
+import { URL_SCHEMA, WS_ENDPOINT } from '../../../codegen'
 
 const httpLink = createHttpLink({
   uri: URL_SCHEMA,
 })
+
+const wsLink = new WebSocketLink(
+  new SubscriptionClient(WS_ENDPOINT, {
+    reconnect: true,
+  })
+)
+
 const authLink = setContext((_, { headers }) => {
   const [getItem] = useSessionStorage('authToken')
   const token = getItem()
@@ -19,7 +29,17 @@ const authLink = setContext((_, { headers }) => {
   }
 })
 
+const splitLink = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query)
+
+    return definition.kind === 'OperationDefinition' && definition.operation === 'subscription'
+  },
+  wsLink,
+  authLink.concat(httpLink)
+)
+
 export const client = new ApolloClient({
   cache: new InMemoryCache({ addTypename: false }),
-  link: authLink.concat(httpLink),
+  link: splitLink,
 })

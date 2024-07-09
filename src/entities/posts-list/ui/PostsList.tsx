@@ -1,7 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 
-import { useGetPostsQuery } from '@/entities/posts-list/api/postListApi.generated'
+import {
+  PostsSubscriptionDocument,
+  PostsSubscriptionSubscription,
+  useGetPostsQuery,
+} from '@/entities/posts-list/api/postListApi.generated'
 import { useDebounce, useTranslation } from '@/shared'
 import { Post } from '@/widgets/post'
 import { TextField, Typography } from '@belozerov-egor/ui-libs'
@@ -19,7 +23,7 @@ export const PostsList = () => {
   const [innerHeight, setInnerHeight] = useState<number>(0)
   const [paddingValue, setPaddingValue] = useState<number>(200)
 
-  const { data, fetchMore, loading } = useGetPostsQuery({
+  const { data, fetchMore, loading, subscribeToMore } = useGetPostsQuery({
     variables: {
       endCursorPostId: 0,
       pageSize: 8,
@@ -95,6 +99,31 @@ export const PostsList = () => {
       setPaddingValue(padding)
     }
   }, [innerHeight])
+
+  useEffect(() => {
+    subscribeToMore<PostsSubscriptionSubscription>({
+      document: PostsSubscriptionDocument,
+      updateQuery: (prev, { subscriptionData }) => {
+        if (!subscriptionData.data) {
+          return prev
+        }
+
+        console.log('subscriptionData', subscriptionData)
+
+        const newPostItem = subscriptionData.data.postAdded
+
+        return Object.assign({}, prev, {
+          getPosts: {
+            __typename: prev.getPosts.__typename,
+            items: [newPostItem, ...prev.getPosts.items],
+            pageSize: prev.getPosts.pageSize,
+            pagesCount: prev.getPosts.pagesCount,
+            totalCount: prev.getPosts.totalCount,
+          },
+        })
+      },
+    })
+  }, [])
 
   const handleClearSearch = () => {
     setSearch('')

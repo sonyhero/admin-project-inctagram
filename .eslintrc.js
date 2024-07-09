@@ -13,6 +13,7 @@ module.exports = {
         },
       },
     ],
+    'max-lines': ['warn', { max: 300 }],
     'no-console': ['warn', { allow: ['warn', 'error'] }],
   },
 }

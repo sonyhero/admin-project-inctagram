@@ -35,6 +35,25 @@ export type GetPostsQuery = {
   }
 }
 
+export type PostsSubscriptionSubscriptionVariables = Types.Exact<{ [key: string]: never }>
+
+export type PostsSubscriptionSubscription = {
+  __typename?: 'Subscription'
+  postAdded: {
+    __typename?: 'Post'
+    createdAt: any
+    description: string
+    id: number
+    images?: Array<{
+      __typename?: 'ImagePost'
+      height?: null | number
+      url?: null | string
+      width?: null | number
+    }> | null
+    ownerId: number
+  }
+}
+
 export const GetPostsDocument = gql`
   query getPosts(
     $pageSize: Int
@@ -113,3 +132,52 @@ export type GetPostsQueryHookResult = ReturnType<typeof useGetPostsQuery>
 export type GetPostsLazyQueryHookResult = ReturnType<typeof useGetPostsLazyQuery>
 export type GetPostsSuspenseQueryHookResult = ReturnType<typeof useGetPostsSuspenseQuery>
 export type GetPostsQueryResult = Apollo.QueryResult<GetPostsQuery, GetPostsQueryVariables>
+export const PostsSubscriptionDocument = gql`
+  subscription postsSubscription {
+    postAdded {
+      images {
+        url
+        height
+        width
+      }
+      ownerId
+      description
+      createdAt
+      id
+    }
+  }
+`
+
+/**
+ * __usePostsSubscriptionSubscription__
+ *
+ * To run a query within a React component, call `usePostsSubscriptionSubscription` and pass it any options that fit your needs.
+ * When your component renders, `usePostsSubscriptionSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePostsSubscriptionSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function usePostsSubscriptionSubscription(
+  baseOptions?: Apollo.SubscriptionHookOptions<
+    PostsSubscriptionSubscription,
+    PostsSubscriptionSubscriptionVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+
+  return Apollo.useSubscription<
+    PostsSubscriptionSubscription,
+    PostsSubscriptionSubscriptionVariables
+  >(PostsSubscriptionDocument, options)
+}
+export type PostsSubscriptionSubscriptionHookResult = ReturnType<
+  typeof usePostsSubscriptionSubscription
+>
+export type PostsSubscriptionSubscriptionResult =
+  Apollo.SubscriptionResult<PostsSubscriptionSubscription>

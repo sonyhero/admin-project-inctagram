@@ -9,5 +9,5 @@ export const PATH = {
 }
 
 export const PRODUCTION_PATH = {
-  USER: 'https://inctag.ru/user',
+  USER: 'https://project-inctagram.vercel.app/user',
 }
