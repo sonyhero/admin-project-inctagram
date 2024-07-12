@@ -91,7 +91,7 @@ export const Post = (props: Props) => {
         {createAtDate}
       </Typography>
       <Typography className={s.description} color={'primary'} variant={'regular14'}>
-        {showMore ? description.trim().substring(0, 240) : description.trim().substring(0, 90)}
+        {showMore ? description.trim().substring(0, 230) : description.trim().substring(0, 90)}
       </Typography>
       {description.trim().length > 90 && (
         <Typography onClick={collapseHandler} variant={'link'}>
