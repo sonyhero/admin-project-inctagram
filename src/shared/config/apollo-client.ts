@@ -5,7 +5,9 @@ import { WebSocketLink } from '@apollo/client/link/ws'
 import { getMainDefinition } from '@apollo/client/utilities'
 import { SubscriptionClient } from 'subscriptions-transport-ws'
 
-import { URL_SCHEMA, WS_ENDPOINT } from '../../../codegen'
+import { URL_SCHEMA } from '../../../codegen'
+
+const WS_ENDPOINT = 'wss://inctagram.work/api/v1/graphql'
 
 const httpLink = createHttpLink({
   uri: URL_SCHEMA,

@@ -1,7 +1,6 @@
 import { CodegenConfig } from '@graphql-codegen/cli'
 
 export const URL_SCHEMA = 'https://inctagram.work/api/v1/graphql'
-export const WS_ENDPOINT = 'ws://inctagram.work/api/v1/graphql'
 
 const config: CodegenConfig = {
   documents: ['src/**/*.graphql'],
